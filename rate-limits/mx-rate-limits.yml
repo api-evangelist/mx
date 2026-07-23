@@ -1,0 +1,30 @@
+generated: '2026-07-23'
+method: searched
+source: https://docs.mx.com/api-reference/platform-api/overview/errors
+notes: >-
+  MX applies per-client rate limits by HTTP method plus a concurrent-connection
+  ceiling. Exceeding either returns HTTP 429; individual features may override
+  these thresholds. Values captured verbatim from the docs error reference.
+scope: per-client
+signal:
+  status: 429
+  retry: Retry once the rate-limit window has expired.
+limits:
+  - method: GET
+    limit_count: 2000
+    window: second
+    unit: requests-per-second
+  - method: POST
+    limit_count: 750
+    window: second
+    unit: requests-per-second
+  - method: PUT
+    limit_count: 750
+    window: second
+    unit: requests-per-second
+  - method: DELETE
+    limit_count: 150
+    window: second
+    unit: requests-per-second
+concurrent_connections:
+  note: A concurrent-connection ceiling also applies; exceeding it returns 429.

@@ -64,12 +64,19 @@ apis:
     url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   - type: Authentication
     url: https://docs.mx.com/resources/oauth-guide
+  - type: MCPServer
+    url: mcp/mx-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+  - type: Overlay
+    url: overlays/mx-platform-api-overlay.yaml
 - aid: mx:mx-consent-management-api
   name: MX Consent Management API
   description: API for embedding the MX consent management dashboard into a customer-facing
     experience, letting consumers grant, modify, and revoke access to their financial
     data. OpenAPI 3.0, version 4.
   humanURL: https://docs.mx.com/api-reference/consent-management
+  baseURL: https://api.mx.com
   tags:
   - Consent
   - Open Finance
@@ -95,6 +102,14 @@ apis:
   - type: Documentation
     url: https://docs.mx.com/products/data/data-access
 common:
+- type: TrustCenter
+  url: security/mx-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/mx-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/mx-domain-security.yml
+- type: Authentication
+  url: authentication/mx-authentication.yml
 - type: Website
   url: https://www.mx.com/
 - type: DeveloperPortal
@@ -115,6 +130,46 @@ common:
   url: https://support.mx.com/
 - type: StatusPage
   url: https://status.mx.com/
+- type: Deprecation
+  url: https://docs.mx.com/api-reference/platform-api/overview/versioning
+- type: Security
+  url: https://mx.com/security-policy/
+- type: SecurityTxt
+  url: well-known/mx-security.txt
+- type: WellKnown
+  url: well-known/mx-well-known.yml
+- type: Compliance
+  url: https://www.mx.com/trust/
+- type: Packages
+  url: packages/mx-packages.yml
+- type: SDKs
+  url: packages/mx-packages.yml
+- type: LLMsTxt
+  url: llms/mx-llms.txt
+- type: Conventions
+  url: conventions/mx-conventions.yml
+- type: ErrorCatalog
+  url: errors/mx-problem-types.yml
+- type: RateLimits
+  url: rate-limits/mx-rate-limits.yml
+- type: Lifecycle
+  url: lifecycle/mx-lifecycle.yml
+- type: ChangeLog
+  url: changelog/mx-changelog.yml
+- type: Sandbox
+  url: sandbox/mx-sandbox.yml
+- type: Components
+  url: components/mx-components.yml
+- type: DataModel
+  url: data-model/mx-data-model.yml
+- type: Conformance
+  url: conformance/mx-conformance.yml
+- type: Webhooks
+  url: asyncapi/mx-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: SignUp
+  url: https://dashboard.mx.com/sign_up
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

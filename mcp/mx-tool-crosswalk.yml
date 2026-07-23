@@ -1,0 +1,55 @@
+generated: '2026-07-23'
+method: derived
+source: mcp/mx-mcp.yml, openapi/mx-platform-api-openapi.yml
+notes: >-
+  Crosswalk binding the DERIVED candidate MCP tool surface (mcp/mx-mcp.yml) to
+  its backing MX Platform API OpenAPI operations. There is no published MX MCP
+  server or GraphQL surface, so every tool maps 1:1 to a REST operationId with
+  high confidence (the tool inherits that operation's parameters as its real
+  inputSchema). rest_only captures the ~160 additional Platform API operations
+  not surfaced as candidate tools.
+surfaces:
+  openapi: openapi/mx-platform-api-openapi.yml
+  graphql: null
+  mcp:
+    url: null
+    status: candidate (derived; no hosted server)
+crosswalk:
+  - {tool: list_users, category: users, rest: [listUsers], binding: rest, confidence: high}
+  - {tool: create_user, category: users, rest: [createUser], binding: rest, confidence: high}
+  - {tool: list_institutions, category: institutions, rest: [listInstitutions], binding: rest, confidence: high}
+  - {tool: create_member, category: members, rest: [createMember], binding: rest, confidence: high}
+  - {tool: list_members, category: members, rest: [listMembers], binding: rest, confidence: high}
+  - {tool: read_member_status, category: members, rest: [readMemberStatus], binding: rest, confidence: high}
+  - {tool: aggregate_member, category: aggregation, rest: [aggregateMember], binding: rest, confidence: high}
+  - {tool: verify_member, category: verification, rest: [verifyMember], binding: rest, confidence: high}
+  - {tool: list_member_accounts, category: accounts, rest: [listMemberAccounts], binding: rest, confidence: high}
+  - {tool: list_user_accounts, category: accounts, rest: [listUserAccounts], binding: rest, confidence: high}
+  - {tool: read_account, category: accounts, rest: [readAccount], binding: rest, confidence: high}
+  - {tool: list_transactions, category: transactions, rest: [listTransactions], binding: rest, confidence: high}
+  - {tool: list_transactions_by_account, category: transactions, rest: [listTransactionsByAccount], binding: rest, confidence: high}
+  - {tool: request_widget_url, category: widgets, rest: [requestWidgetURL], binding: rest, confidence: high}
+mcp_only: []
+rest_only:
+  - category: transactions
+    note: e.g. readTransaction, listTransactionsByMember, listTransactionsByTag, createSplitTransactions, updateTransaction
+  - category: accounts
+    note: e.g. readAccountByMember, listAccountNumbersByAccount, listAccountBalancesByMonth, blockAccount, mergeAccounts
+  - category: members
+    note: e.g. readMember, identifyMember, listMemberChallenges, listMemberCredentials, resumeAggregation, extendHistory
+  - category: budgets-goals-insights
+    note: budgets, goals, insights, spending plan, monthly cash flow profile CRUD
+  - category: categories-tags-taggings
+    note: category, tag, and tagging CRUD
+  - category: verification
+    note: microdeposits, checkBalances, ACH return, processor token operations
+  - category: institutions-merchants
+    note: readInstitution, listInstitutionCredentials, merchants, merchant locations
+  - category: statements-holdings
+    note: statements and investment holdings reads
+coverage:
+  tools_named: 14
+  tools_bound: 14
+  mcp_only: 0
+  rest_ops_total: 174
+  rest_ops_with_tool: 14

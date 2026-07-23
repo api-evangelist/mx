@@ -1,0 +1,28 @@
+generated: '2026-07-23'
+method: searched
+source: openapi/mx-consent-management-openapi.yml, openapi/mx-platform-api-openapi.yml
+docs: https://docs.mx.com/resources/oauth-guide
+notes: >-
+  MX Platform API authenticates with HTTP Basic auth over TLS: client_id is the
+  username and api_key is the password (Base64 in the Authorization header),
+  both issued from the Client Dashboard (dashboard.mx.com). The Consent
+  Management API additionally accepts a bearer token. OAuth in MX is an
+  institution-connection concern (Data Access / connecting members to their
+  banks), not an API-authorization scheme — there is no oauth2 securityScheme in
+  the API specs, so no OAuth scopes surface exists.
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/mx-consent-management-openapi.yml
+  - openapi/mx-platform-api-openapi.yml
+- name: basicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/mx-consent-management-openapi.yml
+  - openapi/mx-platform-api-openapi.yml

@@ -1,0 +1,120 @@
+aid: mx
+url: https://raw.githubusercontent.com/api-evangelist/mx/refs/heads/main/apis.yml
+name: MX
+kind: company
+description: MX Technologies is a privately held financial data platform headquartered
+  in Lehi, Utah, operating as a B2B data aggregator and open-finance infrastructure
+  provider rather than a chartered bank or credit union. MX connects consumer and
+  business accounts across tens of thousands of financial institutions and fintechs,
+  then cleanses, categorizes, and enhances the resulting transaction data so banks
+  and fintechs can build verification, aggregation, and personal-finance experiences.
+  Unlike most US banks, MX runs a real, self-documented developer surface — the MX
+  Platform API (HTTP Basic auth over https://api.mx.com), a Consent Management API,
+  and a Data Access product that shares and consumes institution data using FDX and
+  OAuth standards — with downloadable OpenAPI 3.0 specifications published at
+  docs.mx.com. MX is one of the major US open-finance aggregators (alongside Plaid,
+  Finicity, and Akoya) and positions Data Access as FDX-conformant, consumer-permissioned,
+  tokenized data sharing.
+accessModel:
+  pricing: paid
+  onboarding: partner
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Partner/sales onboarding (API keys via developer portal)
+  confidence: medium
+  source:
+  - documentation
+  - authentication
+  generated: '2026-07-23'
+  method: manual
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Financial Services
+- Banking
+- United States
+- Open Finance
+- Data Aggregation
+- FDX
+- Fintech
+- Financial Data
+created: '2026-07-23'
+modified: '2026-07-23'
+specificationVersion: '0.19'
+apis:
+- aid: mx:mx-platform-api
+  name: MX Platform API
+  description: The MX Platform API aggregates and enhances financial data, connecting
+    apps and websites to tens of thousands of financial institutions. Covers users,
+    members, accounts, transactions, categorization, insights, verification, and
+    widgets. OpenAPI 3.0 (version v20250224), HTTP Basic authentication.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - Financial Data
+  - Aggregation
+  - Data Enhancement
+  - Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-platform-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+- aid: mx:mx-consent-management-api
+  name: MX Consent Management API
+  description: API for embedding the MX consent management dashboard into a customer-facing
+    experience, letting consumers grant, modify, and revoke access to their financial
+    data. OpenAPI 3.0, version 4.
+  humanURL: https://docs.mx.com/api-reference/consent-management
+  tags:
+  - Consent
+  - Open Finance
+  - Data Sharing
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-consent-management-openapi.yml
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/consent-management
+- aid: mx:mx-data-access
+  name: MX Data Access
+  description: Data Access is MX's open-finance API platform for sharing an institution's
+    financial data and accessing other institutions' data using FDX and OAuth standards,
+    with tokenized, consumer-permissioned access that consumers can grant, modify,
+    and revoke at any time.
+  humanURL: https://docs.mx.com/products/data/data-access
+  tags:
+  - Open Finance
+  - FDX
+  - OAuth
+  - Data Access
+  properties:
+  - type: Documentation
+    url: https://docs.mx.com/products/data/data-access
+common:
+- type: Website
+  url: https://www.mx.com/
+- type: DeveloperPortal
+  url: https://developer.mx.com/
+- type: Documentation
+  url: https://docs.mx.com/
+- type: GitHubOrganization
+  url: https://github.com/mxenabled
+- type: LinkedIn
+  url: https://www.linkedin.com/company/425337
+- type: Blog
+  url: https://www.mx.com/blog/
+- type: TermsOfService
+  url: https://www.mx.com/terms/
+- type: PrivacyPolicy
+  url: https://www.mx.com/privacy/
+- type: Support
+  url: https://support.mx.com/
+- type: StatusPage
+  url: https://status.mx.com/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

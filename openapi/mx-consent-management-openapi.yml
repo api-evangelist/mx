@@ -1,0 +1,220 @@
+openapi: 3.0.0
+info:
+  title: Consent Management V4 API
+  version: '4.0'
+  contact:
+    name: MX
+    url: https://www.mx.com
+  description: >-
+    API for embedding the consent management dashboard into your customer-facing
+    experience.
+  termsOfService: https://www.mx.com/terms/
+servers:
+  - url: http://{baseurl}
+tags:
+  - name: consent_management
+    description: Consent Management
+security:
+  - basicAuth: []
+paths:
+  /api/{version}/consent_management:
+    get:
+      tags:
+        - consent_management
+      summary: Consent list
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsentList'
+      operationId: 3-consentList
+      description: >-
+        Returns all data sharing information for an end user. Use this endpoint
+        to list an end user's current data sharing choices. Each of the end
+        user's connected apps has a separate consent which is detailed in the
+        response by a consent object. The consent object includes details such
+        as the app's id, name, icon, and the sharing status of the end-user's
+        accounts.
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/version'
+  /api/{version}/consent_management/{ConsentPublicId}/accounts:
+    put:
+      tags:
+        - consent_management
+      summary: Update Auto Access
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - automatic_access
+              properties:
+                automatic_access:
+                  type: boolean
+                  example: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Consent'
+      operationId: autoAccessUpdate
+      description: >-
+        Set a consented app's auto update status. Use this endpoint to allow or
+        disallow an app to automatically add new accounts to an end user's
+        consent. This sets the consent object's `auto_enable_future_accounts`
+        field to true or false.
+      security:
+        - bearerAuth: []
+    parameters:
+      - $ref: '#/components/parameters/ConsentPublicId'
+      - $ref: '#/components/parameters/version'
+  /api/{version}/consent_management/{ConsentPublicId}/accounts/{AccountId}:
+    put:
+      tags:
+        - consent_management
+      summary: Update Consented Account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+              required:
+                - enabled
+              x-examples:
+                Example 1:
+                  enabled: true
+      parameters:
+        - $ref: '#/components/parameters/ConsentPublicId'
+        - $ref: '#/components/parameters/AccountId'
+        - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Consent'
+      operationId: accountEnabledStatus
+      description: >-
+        Updates a consent by enabling or disabling an account. Use this endpoint
+        when an end user wants to change whether or not an account is shared
+        with an app.
+      security:
+        - bearerAuth: []
+  /api/{version}/consent_management/{ConsentPublicId}/disable_app_sharing:
+    put:
+      tags:
+        - consent_management
+      summary: Revoke Consent
+      parameters:
+        - $ref: '#/components/parameters/ConsentPublicId'
+        - $ref: '#/components/parameters/version'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Consent'
+      operationId: revokeConsent
+      security:
+        - bearerAuth: []
+      description: >-
+        Disables the selected consent and updates `revoked_at` with current
+        time. Use this endpoint when an end user wants to stop all data sharing
+        with an app.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    Consent:
+      type: object
+      properties:
+        id:
+          type: string
+          example: _sadfa3CKHJ23LKJHKJHLlNaODPmH1LqSb4
+        application_name:
+          type: string
+          example: Centz
+        application_icon_url:
+          type: string
+          example: https://www.example.com
+          nullable: true
+        created_at:
+          type: string
+          example: '2024-06-14T19:48:18.354Z'
+        last_accessed:
+          type: string
+          example: '2024-05-14T19:48:31.352Z'
+        accounts:
+          type: array
+          items:
+            type: object
+            properties:
+              enabled:
+                type: boolean
+                example: true
+              nickname:
+                type: string
+                example: Lacrosse Fund
+              account_id:
+                type: string
+                example: '1234123412341234'
+              account_number_display:
+                type: string
+                example: XXXXXXXX1111
+        auto_enable_future_accounts:
+          type: boolean
+          example: true
+        consented_on:
+          type: string
+          example: '2024-05-14T19:48:18.352Z'
+        revoked_at:
+          type: string
+          nullable: true
+          example: null
+      description: Consent object
+    ConsentList:
+      title: ConsentList
+      type: array
+      items:
+        $ref: '#/components/schemas/Consent'
+  parameters:
+    version:
+      name: version
+      in: path
+      required: true
+      schema:
+        type: string
+        default: v4
+        example: v4
+      description: API version. Indicates which FDX version is in use.
+    ConsentPublicId:
+      name: ConsentPublicId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The consent id. This value is returned in the GET Consent List as `id`.
+    AccountId:
+      name: AccountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The account id selected for update.

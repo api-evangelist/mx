@@ -1,0 +1,88 @@
+aid: mx
+name: MX
+review:
+  question: Does MX expose a real, publicly documented first-party developer API with downloadable specifications, and what is its US open-finance posture?
+  answer: true
+  date: '2026-07-23'
+  reviewer: API Evangelist
+findings:
+  summary: |
+    MX Technologies is a US financial data aggregator and open-finance
+    infrastructure provider (Lehi, Utah — privately held, not a chartered
+    bank or credit union). Unlike most US banks, MX runs a genuine,
+    self-hosted developer portal at docs.mx.com with publicly downloadable
+    OpenAPI 3.0 specifications — no partner gate required to read them. Two
+    machine-readable specs were harvested verbatim: the MX Platform API
+    (v20250224, 121 paths, 27 tags: users, members, accounts, transactions,
+    categorization, insights, verification, statements, widgets, etc.) and
+    the Consent Management V4 API. The developer key-management portal at
+    developer.mx.com returned HTTP 401 (auth-gated signup), while the docs
+    and OpenAPI files are fully public. MX documents FDX participation
+    directly: its Data Access product shares and consumes institution data
+    "using FDX and OAuth standards" with tokenized, consumer-permissioned
+    access. No explicit CFPB Section 1033 statement was found on the public
+    site as of the review date. MX is one of the major US aggregators
+    (alongside Plaid, Finicity, Akoya), so much US bank data reaches
+    consumers through MX rather than through those banks' first-party APIs.
+  charterType: Privately held technology company (data aggregator / open-finance platform), not a bank or credit union
+  openFinancePosture:
+    firstPartyDeveloperPortal: true
+    developerPortalURL: https://docs.mx.com/
+    keyManagementPortalURL: https://developer.mx.com/
+    keyManagementPortalStatus: 401 (auth-gated)
+    downloadableSpecs: true
+    fdxParticipant: true
+    fdxEvidence: 'Data Access product docs: "share your institution''s financial data and access the data of other institutions using FDX and OAuth standards"'
+    cfpb1033Posture: No explicit Section 1033 statement found on public site as of 2026-07-23
+    aggregatorAccess: MX is itself a major US aggregator (peer to Plaid, Finicity, Akoya)
+  authModel:
+    platformAPI: HTTP Basic authentication (client ID + API key) over TLS; a bearer scheme is also declared in the spec
+    schemesInSpec:
+      - basicAuth (http/basic)
+      - bearerAuth (http/bearer)
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.mx.com
+      documented: true
+      note: MX Platform API production base URL; https://int-api.mx.com is the integration/sandbox server.
+  specProvenance:
+    - api: MX Platform API
+      source: https://docs.mx.com/openapi/platform-api/v20250224.yaml
+      httpStatus: 200
+      savedAs: openapi/mx-platform-api-openapi.yml
+      openapiVersion: 3.0.0
+      paths: 121
+    - api: Consent Management V4 API
+      source: https://docs.mx.com/openapi/consent-management/v4.yaml
+      httpStatus: 200
+      savedAs: openapi/mx-consent-management-openapi.yml
+      openapiVersion: 3.0.0
+      paths: 4
+sources:
+  - url: https://www.mx.com/
+    type: Website
+    httpStatus: 200
+  - url: https://docs.mx.com/
+    type: Documentation
+    httpStatus: 200
+  - url: https://developer.mx.com/
+    type: DeveloperPortal
+    httpStatus: 401
+    note: Auth-gated API key management / developer signup portal.
+  - url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+    type: APIReference
+    httpStatus: 200
+  - url: https://docs.mx.com/products/data/data-access
+    type: Documentation
+    httpStatus: 200
+    note: States Data Access uses FDX and OAuth standards for consumer-permissioned data sharing.
+  - url: https://docs.mx.com/api-reference/consent-management
+    type: APIReference
+    httpStatus: 200
+  - url: https://github.com/mxenabled
+    type: GitHubOrganization
+    httpStatus: 200
+  - url: https://status.mx.com/
+    type: StatusPage
+    httpStatus: 200

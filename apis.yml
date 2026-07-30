@@ -44,10 +44,10 @@ specificationVersion: '0.19'
 apis:
 - aid: mx:mx-platform-api
   name: MX Platform API
-  description: The MX Platform API aggregates and enhances financial data, connecting
-    apps and websites to tens of thousands of financial institutions. Covers users,
-    members, accounts, transactions, categorization, insights, verification, and
-    widgets. OpenAPI 3.0 (version v20250224), HTTP Basic authentication.
+  description: >-
+    The MX Platform API aggregates and enhances financial data, connecting apps and websites to tens of
+    thousands of financial institutions. Covers users, members, accounts, transactions, categorization,
+    insights, verification, and widgets. OpenAPI 3.0 (version v20250224), HTTP Basic authentication.
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
@@ -70,28 +70,12 @@ apis:
     url: mcp/mx-tool-crosswalk.yml
   - type: Overlay
     url: overlays/mx-platform-api-overlay.yaml
-- aid: mx:mx-consent-management-api
-  name: MX Consent Management API
-  description: API for embedding the MX consent management dashboard into a customer-facing
-    experience, letting consumers grant, modify, and revoke access to their financial
-    data. OpenAPI 3.0, version 4.
-  humanURL: https://docs.mx.com/api-reference/consent-management
-  baseURL: https://api.mx.com
-  tags:
-  - Consent
-  - Open Finance
-  - Data Sharing
-  properties:
-  - type: OpenAPI
-    url: openapi/mx-consent-management-openapi.yml
-  - type: APIReference
-    url: https://docs.mx.com/api-reference/consent-management
 - aid: mx:mx-data-access
   name: MX Data Access
-  description: Data Access is MX's open-finance API platform for sharing an institution's
-    financial data and accessing other institutions' data using FDX and OAuth standards,
-    with tokenized, consumer-permissioned access that consumers can grant, modify,
-    and revoke at any time.
+  description: >-
+    Data Access is MX's open-finance API platform for sharing an institution's financial data and accessing
+    other institutions' data using FDX and OAuth standards, with tokenized, consumer-permissioned access
+    that consumers can grant, modify, and revoke at any time.
   humanURL: https://docs.mx.com/products/data/data-access
   tags:
   - Open Finance
@@ -101,7 +85,17 @@ apis:
   properties:
   - type: Documentation
     url: https://docs.mx.com/products/data/data-access
+- aid: mx:mx-consent-management-openapi
+  name: MX Consent Management V4 API
+  description: MX Consent Management V4 API from MX — 4 path(s) described in OpenAPI.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-consent-management-openapi.yml
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/mx/overview
 - type: TrustCenter
   url: security/mx-trust-center.yml
 - type: VulnerabilityDisclosure

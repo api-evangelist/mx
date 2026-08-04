@@ -13,7 +13,8 @@ surfaces:
   graphql: null
   mcp:
     url: null
-    status: candidate (derived; no hosted server)
+    status: candidate
+    status_raw: candidate
 crosswalk:
   - {tool: list_users, category: users, rest: [listUsers], binding: rest, confidence: high}
   - {tool: create_user, category: users, rest: [createUser], binding: rest, confidence: high}

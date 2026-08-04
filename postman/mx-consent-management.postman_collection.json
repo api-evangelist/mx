@@ -1,0 +1,604 @@
+{
+  "info": {
+    "_postman_id": "4afdb24f-3922-4f36-b56b-30959897aa4c",
+    "name": "Consent Management V4 API",
+    "description": "API for embedding the consent management dashboard into your customer-facing experience.\n\nContact Support:\n Name: MX",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:15:36.000Z",
+    "updatedAt": "2026-07-28T02:15:36.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4afdb24f-3922-4f36-b56b-30959897aa4c"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "{version}",
+          "item": [
+            {
+              "name": "consent_management",
+              "item": [
+                {
+                  "name": "{ConsentPublicId}",
+                  "item": [
+                    {
+                      "name": "accounts",
+                      "item": [
+                        {
+                          "name": "{AccountId}",
+                          "item": [
+                            {
+                              "name": "Update Consented Account",
+                              "id": "16b346a0-4f22-4946-95eb-76ec248b9b87",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "auth": {
+                                  "type": "bearer",
+                                  "bearer": [
+                                    {
+                                      "key": "token",
+                                      "value": "{{bearerToken}}",
+                                      "type": "string"
+                                    }
+                                  ]
+                                },
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"enabled\": \"<boolean>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/:version/consent_management/:ConsentPublicId/accounts/:AccountId",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    ":version",
+                                    "consent_management",
+                                    ":ConsentPublicId",
+                                    "accounts",
+                                    ":AccountId"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "ae302bc1-17ed-4807-8b0c-400f4b491f1c",
+                                      "key": "version",
+                                      "value": "v4",
+                                      "description": "(Required) API version. Indicates which FDX version is in use."
+                                    },
+                                    {
+                                      "id": "7b6c85c7-29b9-4144-a26e-9412da1fc4b3",
+                                      "key": "ConsentPublicId",
+                                      "value": "<string>",
+                                      "description": "(Required) The consent id. This value is returned in the GET Consent List as `id`."
+                                    },
+                                    {
+                                      "id": "640297ec-57c0-4a9a-b25d-a67afa4a1a4b",
+                                      "key": "AccountId",
+                                      "value": "<string>",
+                                      "description": "(Required) The account id selected for update."
+                                    }
+                                  ]
+                                },
+                                "description": "Updates a consent by enabling or disabling an account. Use this endpoint when an end user wants to change whether or not an account is shared with an app."
+                              },
+                              "response": [
+                                {
+                                  "id": "2b2649ce-77dd-4a9a-8cb9-e02f25e7c7f1",
+                                  "name": "Successful response",
+                                  "originalRequest": {
+                                    "method": "PUT",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"enabled\": \"<boolean>\"\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/api/:version/consent_management/:ConsentPublicId/accounts/:AccountId",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "api",
+                                        ":version",
+                                        "consent_management",
+                                        ":ConsentPublicId",
+                                        "accounts",
+                                        ":AccountId"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "version"
+                                        },
+                                        {
+                                          "key": "ConsentPublicId"
+                                        },
+                                        {
+                                          "key": "AccountId"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"id\": \"<string>\",\n  \"application_name\": \"<string>\",\n  \"application_icon_url\": \"<string>\",\n  \"created_at\": \"<string>\",\n  \"last_accessed\": \"<string>\",\n  \"accounts\": [\n    {\n      \"enabled\": \"<boolean>\",\n      \"nickname\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"account_number_display\": \"<string>\"\n    },\n    {\n      \"enabled\": \"<boolean>\",\n      \"nickname\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"account_number_display\": \"<string>\"\n    }\n  ],\n  \"auto_enable_future_accounts\": \"<boolean>\",\n  \"consented_on\": \"<string>\",\n  \"revoked_at\": \"<string>\"\n}",
+                                  "createdAt": "2026-07-28T02:15:36.000Z",
+                                  "updatedAt": "2026-07-28T02:15:36.000Z",
+                                  "uid": "35240-2b2649ce-77dd-4a9a-8cb9-e02f25e7c7f1"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:15:36.000Z",
+                              "updatedAt": "2026-07-28T02:15:36.000Z",
+                              "uid": "35240-16b346a0-4f22-4946-95eb-76ec248b9b87"
+                            }
+                          ],
+                          "id": "db7d9b0b-da81-4053-81a3-885232f087e9",
+                          "createdAt": "2026-07-28T02:15:36.000Z",
+                          "updatedAt": "2026-07-28T02:15:36.000Z",
+                          "uid": "35240-db7d9b0b-da81-4053-81a3-885232f087e9"
+                        },
+                        {
+                          "name": "Update Auto Access",
+                          "id": "1d15eea0-c371-435d-b4a5-2858334aba80",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"automatic_access\": \"<boolean>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/:version/consent_management/:ConsentPublicId/accounts",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                ":version",
+                                "consent_management",
+                                ":ConsentPublicId",
+                                "accounts"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "4e845d18-7b4e-48fe-a88f-b9cd4c0c76dd",
+                                  "key": "version",
+                                  "value": "v4",
+                                  "description": "(Required) API version. Indicates which FDX version is in use."
+                                },
+                                {
+                                  "id": "b63305f3-982f-459d-8826-6c9552729937",
+                                  "key": "ConsentPublicId",
+                                  "value": "<string>",
+                                  "description": "(Required) The consent id. This value is returned in the GET Consent List as `id`."
+                                }
+                              ]
+                            },
+                            "description": "Set a consented app's auto update status. Use this endpoint to allow or disallow an app to automatically add new accounts to an end user's consent. This sets the consent object's `auto_enable_future_accounts` field to true or false."
+                          },
+                          "response": [
+                            {
+                              "id": "341e895c-3fe5-4b23-9fb1-78174fe5716c",
+                              "name": "Successful response",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"automatic_access\": \"<boolean>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/:version/consent_management/:ConsentPublicId/accounts",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    ":version",
+                                    "consent_management",
+                                    ":ConsentPublicId",
+                                    "accounts"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "version"
+                                    },
+                                    {
+                                      "key": "ConsentPublicId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<string>\",\n  \"application_name\": \"<string>\",\n  \"application_icon_url\": \"<string>\",\n  \"created_at\": \"<string>\",\n  \"last_accessed\": \"<string>\",\n  \"accounts\": [\n    {\n      \"enabled\": \"<boolean>\",\n      \"nickname\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"account_number_display\": \"<string>\"\n    },\n    {\n      \"enabled\": \"<boolean>\",\n      \"nickname\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"account_number_display\": \"<string>\"\n    }\n  ],\n  \"auto_enable_future_accounts\": \"<boolean>\",\n  \"consented_on\": \"<string>\",\n  \"revoked_at\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:15:36.000Z",
+                              "updatedAt": "2026-07-28T02:15:36.000Z",
+                              "uid": "35240-341e895c-3fe5-4b23-9fb1-78174fe5716c"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:15:36.000Z",
+                          "updatedAt": "2026-07-28T02:15:36.000Z",
+                          "uid": "35240-1d15eea0-c371-435d-b4a5-2858334aba80"
+                        }
+                      ],
+                      "id": "d9ae95c1-ed42-462d-9558-01bdb625bb0f",
+                      "createdAt": "2026-07-28T02:15:36.000Z",
+                      "updatedAt": "2026-07-28T02:15:36.000Z",
+                      "uid": "35240-d9ae95c1-ed42-462d-9558-01bdb625bb0f"
+                    },
+                    {
+                      "name": "disable_app_sharing",
+                      "item": [
+                        {
+                          "name": "Revoke Consent",
+                          "id": "8672e8f0-772e-4fdd-8804-b09ea669514e",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "PUT",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/:version/consent_management/:ConsentPublicId/disable_app_sharing",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                ":version",
+                                "consent_management",
+                                ":ConsentPublicId",
+                                "disable_app_sharing"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "023a64c1-6527-4540-8e39-4148698936be",
+                                  "key": "version",
+                                  "value": "v4",
+                                  "description": "(Required) API version. Indicates which FDX version is in use."
+                                },
+                                {
+                                  "id": "4f30a95f-9c75-4911-b034-c25a7171c191",
+                                  "key": "ConsentPublicId",
+                                  "value": "<string>",
+                                  "description": "(Required) The consent id. This value is returned in the GET Consent List as `id`."
+                                }
+                              ]
+                            },
+                            "description": "Disables the selected consent and updates `revoked_at` with current time. Use this endpoint when an end user wants to stop all data sharing with an app."
+                          },
+                          "response": [
+                            {
+                              "id": "3c9140ec-2bbe-4609-a2a3-13451a29938b",
+                              "name": "Successful response",
+                              "originalRequest": {
+                                "method": "PUT",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/:version/consent_management/:ConsentPublicId/disable_app_sharing",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    ":version",
+                                    "consent_management",
+                                    ":ConsentPublicId",
+                                    "disable_app_sharing"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "version"
+                                    },
+                                    {
+                                      "key": "ConsentPublicId"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<string>\",\n  \"application_name\": \"<string>\",\n  \"application_icon_url\": \"<string>\",\n  \"created_at\": \"<string>\",\n  \"last_accessed\": \"<string>\",\n  \"accounts\": [\n    {\n      \"enabled\": \"<boolean>\",\n      \"nickname\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"account_number_display\": \"<string>\"\n    },\n    {\n      \"enabled\": \"<boolean>\",\n      \"nickname\": \"<string>\",\n      \"account_id\": \"<string>\",\n      \"account_number_display\": \"<string>\"\n    }\n  ],\n  \"auto_enable_future_accounts\": \"<boolean>\",\n  \"consented_on\": \"<string>\",\n  \"revoked_at\": \"<string>\"\n}",
+                              "createdAt": "2026-07-28T02:15:36.000Z",
+                              "updatedAt": "2026-07-28T02:15:36.000Z",
+                              "uid": "35240-3c9140ec-2bbe-4609-a2a3-13451a29938b"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:15:36.000Z",
+                          "updatedAt": "2026-07-28T02:15:36.000Z",
+                          "uid": "35240-8672e8f0-772e-4fdd-8804-b09ea669514e"
+                        }
+                      ],
+                      "id": "e3b5b87a-2f5d-4323-8557-c99f6fbadfed",
+                      "createdAt": "2026-07-28T02:15:36.000Z",
+                      "updatedAt": "2026-07-28T02:15:36.000Z",
+                      "uid": "35240-e3b5b87a-2f5d-4323-8557-c99f6fbadfed"
+                    }
+                  ],
+                  "id": "6dcf92f8-fc2f-4e30-a55e-408e6151fa92",
+                  "createdAt": "2026-07-28T02:15:36.000Z",
+                  "updatedAt": "2026-07-28T02:15:36.000Z",
+                  "uid": "35240-6dcf92f8-fc2f-4e30-a55e-408e6151fa92"
+                },
+                {
+                  "name": "Consent list",
+                  "id": "d35ea76d-3dbe-4bbb-ae9e-3c261ed0467b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/:version/consent_management",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        ":version",
+                        "consent_management"
+                      ],
+                      "variable": [
+                        {
+                          "id": "56521ebe-ca0d-426d-96df-c3fad3a77a7e",
+                          "key": "version",
+                          "value": "v4",
+                          "description": "(Required) API version. Indicates which FDX version is in use."
+                        }
+                      ]
+                    },
+                    "description": "Returns all data sharing information for an end user. Use this endpoint to list an end user's current data sharing choices. Each of the end user's connected apps has a separate consent which is detailed in the response by a consent object. The consent object includes details such as the app's id, name, icon, and the sharing status of the end-user's accounts."
+                  },
+                  "response": [
+                    {
+                      "id": "e25ef3ab-40b2-4cd3-9ce9-e524c5792a93",
+                      "name": "Successful response",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/:version/consent_management",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            ":version",
+                            "consent_management"
+                          ],
+                          "variable": [
+                            {
+                              "key": "version"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"id\": \"<string>\",\n    \"application_name\": \"<string>\",\n    \"application_icon_url\": \"<string>\",\n    \"created_at\": \"<string>\",\n    \"last_accessed\": \"<string>\",\n    \"accounts\": [\n      {\n        \"enabled\": \"<boolean>\",\n        \"nickname\": \"<string>\",\n        \"account_id\": \"<string>\",\n        \"account_number_display\": \"<string>\"\n      },\n      {\n        \"enabled\": \"<boolean>\",\n        \"nickname\": \"<string>\",\n        \"account_id\": \"<string>\",\n        \"account_number_display\": \"<string>\"\n      }\n    ],\n    \"auto_enable_future_accounts\": \"<boolean>\",\n    \"consented_on\": \"<string>\",\n    \"revoked_at\": \"<string>\"\n  },\n  {\n    \"id\": \"<string>\",\n    \"application_name\": \"<string>\",\n    \"application_icon_url\": \"<string>\",\n    \"created_at\": \"<string>\",\n    \"last_accessed\": \"<string>\",\n    \"accounts\": [\n      {\n        \"enabled\": \"<boolean>\",\n        \"nickname\": \"<string>\",\n        \"account_id\": \"<string>\",\n        \"account_number_display\": \"<string>\"\n      },\n      {\n        \"enabled\": \"<boolean>\",\n        \"nickname\": \"<string>\",\n        \"account_id\": \"<string>\",\n        \"account_number_display\": \"<string>\"\n      }\n    ],\n    \"auto_enable_future_accounts\": \"<boolean>\",\n    \"consented_on\": \"<string>\",\n    \"revoked_at\": \"<string>\"\n  }\n]",
+                      "createdAt": "2026-07-28T02:15:36.000Z",
+                      "updatedAt": "2026-07-28T02:15:36.000Z",
+                      "uid": "35240-e25ef3ab-40b2-4cd3-9ce9-e524c5792a93"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:15:36.000Z",
+                  "updatedAt": "2026-07-28T02:15:36.000Z",
+                  "uid": "35240-d35ea76d-3dbe-4bbb-ae9e-3c261ed0467b"
+                }
+              ],
+              "id": "4e52df6a-9c17-4d92-8941-6e38aa161389",
+              "createdAt": "2026-07-28T02:15:36.000Z",
+              "updatedAt": "2026-07-28T02:15:36.000Z",
+              "uid": "35240-4e52df6a-9c17-4d92-8941-6e38aa161389"
+            }
+          ],
+          "id": "79979068-50df-4756-b816-4ed32c8a2fbe",
+          "createdAt": "2026-07-28T02:15:36.000Z",
+          "updatedAt": "2026-07-28T02:15:36.000Z",
+          "uid": "35240-79979068-50df-4756-b816-4ed32c8a2fbe"
+        }
+      ],
+      "id": "78c58515-6b70-46d0-ad68-9efc846752cd",
+      "createdAt": "2026-07-28T02:15:36.000Z",
+      "updatedAt": "2026-07-28T02:15:36.000Z",
+      "uid": "35240-78c58515-6b70-46d0-ad68-9efc846752cd"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://{{baseurl}}"
+    }
+  ]
+}

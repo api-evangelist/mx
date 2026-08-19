@@ -1,0 +1,581 @@
+{
+  "item": [
+    {
+      "id": "cf182f40-21ce-4400-b48b-7c4198c6e9e1",
+      "name": "consent_management",
+      "description": {
+        "content": "Consent Management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "17070f89-c0f6-4673-8679-05f817f41646",
+          "name": "Consent list",
+          "request": {
+            "name": "Consent list",
+            "description": {
+              "content": "Returns all data sharing information for an end user. Use this endpoint to list an end user's current data sharing choices. Each of the end user's connected apps has a separate consent which is detailed in the response by a consent object. The consent object includes details such as the app's id, name, icon, and the sharing status of the end-user's accounts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":version",
+                "consent_management"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "v4",
+                  "key": "version",
+                  "description": "(Required) API version. Indicates which FDX version is in use."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c08d8c09-f927-4eef-8355-b7ce9766ff52",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":version",
+                    "consent_management"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "v4",
+                      "key": "version",
+                      "description": "(Required) API version. Indicates which FDX version is in use."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"_sadfa3CKHJ23LKJHKJHLlNaODPmH1LqSb4\",\n    \"application_name\": \"Centz\",\n    \"application_icon_url\": \"https://www.example.com\",\n    \"created_at\": \"2024-06-14T19:48:18.354Z\",\n    \"last_accessed\": \"2024-05-14T19:48:31.352Z\",\n    \"accounts\": [\n      {\n        \"enabled\": true,\n        \"nickname\": \"Lacrosse Fund\",\n        \"account_id\": \"1234123412341234\",\n        \"account_number_display\": \"XXXXXXXX1111\"\n      },\n      {\n        \"enabled\": true,\n        \"nickname\": \"Lacrosse Fund\",\n        \"account_id\": \"1234123412341234\",\n        \"account_number_display\": \"XXXXXXXX1111\"\n      }\n    ],\n    \"auto_enable_future_accounts\": true,\n    \"consented_on\": \"2024-05-14T19:48:18.352Z\",\n    \"revoked_at\": null\n  },\n  {\n    \"id\": \"_sadfa3CKHJ23LKJHKJHLlNaODPmH1LqSb4\",\n    \"application_name\": \"Centz\",\n    \"application_icon_url\": \"https://www.example.com\",\n    \"created_at\": \"2024-06-14T19:48:18.354Z\",\n    \"last_accessed\": \"2024-05-14T19:48:31.352Z\",\n    \"accounts\": [\n      {\n        \"enabled\": true,\n        \"nickname\": \"Lacrosse Fund\",\n        \"account_id\": \"1234123412341234\",\n        \"account_number_display\": \"XXXXXXXX1111\"\n      },\n      {\n        \"enabled\": true,\n        \"nickname\": \"Lacrosse Fund\",\n        \"account_id\": \"1234123412341234\",\n        \"account_number_display\": \"XXXXXXXX1111\"\n      }\n    ],\n    \"auto_enable_future_accounts\": true,\n    \"consented_on\": \"2024-05-14T19:48:18.352Z\",\n    \"revoked_at\": null\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "12b710b1-5fec-475b-b081-22a6a9d517cd",
+          "name": "Update Auto Access",
+          "request": {
+            "name": "Update Auto Access",
+            "description": {
+              "content": "Set a consented app's auto update status. Use this endpoint to allow or disallow an app to automatically add new accounts to an end user's consent. This sets the consent object's `auto_enable_future_accounts` field to true or false.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":version",
+                "consent_management",
+                ":ConsentPublicId",
+                "accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ConsentPublicId",
+                  "description": "(Required) The consent id. This value is returned in the GET Consent List as `id`."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "v4",
+                  "key": "version",
+                  "description": "(Required) API version. Indicates which FDX version is in use."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"automatic_access\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8ebe4de9-5dd9-4b10-bb17-31ae1394ddab",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":version",
+                    "consent_management",
+                    ":ConsentPublicId",
+                    "accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ConsentPublicId",
+                      "description": "(Required) The consent id. This value is returned in the GET Consent List as `id`."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "v4",
+                      "key": "version",
+                      "description": "(Required) API version. Indicates which FDX version is in use."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"automatic_access\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"_sadfa3CKHJ23LKJHKJHLlNaODPmH1LqSb4\",\n  \"application_name\": \"Centz\",\n  \"application_icon_url\": \"https://www.example.com\",\n  \"created_at\": \"2024-06-14T19:48:18.354Z\",\n  \"last_accessed\": \"2024-05-14T19:48:31.352Z\",\n  \"accounts\": [\n    {\n      \"enabled\": true,\n      \"nickname\": \"Lacrosse Fund\",\n      \"account_id\": \"1234123412341234\",\n      \"account_number_display\": \"XXXXXXXX1111\"\n    },\n    {\n      \"enabled\": true,\n      \"nickname\": \"Lacrosse Fund\",\n      \"account_id\": \"1234123412341234\",\n      \"account_number_display\": \"XXXXXXXX1111\"\n    }\n  ],\n  \"auto_enable_future_accounts\": true,\n  \"consented_on\": \"2024-05-14T19:48:18.352Z\",\n  \"revoked_at\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81a29f44-55c8-43da-9b2d-a9ded25d1e7c",
+          "name": "Update Consented Account",
+          "request": {
+            "name": "Update Consented Account",
+            "description": {
+              "content": "Updates a consent by enabling or disabling an account. Use this endpoint when an end user wants to change whether or not an account is shared with an app.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":version",
+                "consent_management",
+                ":ConsentPublicId",
+                "accounts",
+                ":AccountId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ConsentPublicId",
+                  "description": "(Required) The consent id. This value is returned in the GET Consent List as `id`."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "AccountId",
+                  "description": "(Required) The account id selected for update."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "v4",
+                  "key": "version",
+                  "description": "(Required) API version. Indicates which FDX version is in use."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f62d6bb7-b9c5-438f-98a2-8da97226c667",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":version",
+                    "consent_management",
+                    ":ConsentPublicId",
+                    "accounts",
+                    ":AccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ConsentPublicId",
+                      "description": "(Required) The consent id. This value is returned in the GET Consent List as `id`."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "AccountId",
+                      "description": "(Required) The account id selected for update."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "v4",
+                      "key": "version",
+                      "description": "(Required) API version. Indicates which FDX version is in use."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"enabled\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"_sadfa3CKHJ23LKJHKJHLlNaODPmH1LqSb4\",\n  \"application_name\": \"Centz\",\n  \"application_icon_url\": \"https://www.example.com\",\n  \"created_at\": \"2024-06-14T19:48:18.354Z\",\n  \"last_accessed\": \"2024-05-14T19:48:31.352Z\",\n  \"accounts\": [\n    {\n      \"enabled\": true,\n      \"nickname\": \"Lacrosse Fund\",\n      \"account_id\": \"1234123412341234\",\n      \"account_number_display\": \"XXXXXXXX1111\"\n    },\n    {\n      \"enabled\": true,\n      \"nickname\": \"Lacrosse Fund\",\n      \"account_id\": \"1234123412341234\",\n      \"account_number_display\": \"XXXXXXXX1111\"\n    }\n  ],\n  \"auto_enable_future_accounts\": true,\n  \"consented_on\": \"2024-05-14T19:48:18.352Z\",\n  \"revoked_at\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5b4972d1-3b87-46c5-a399-c607a505386e",
+          "name": "Revoke Consent",
+          "request": {
+            "name": "Revoke Consent",
+            "description": {
+              "content": "Disables the selected consent and updates `revoked_at` with current time. Use this endpoint when an end user wants to stop all data sharing with an app.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":version",
+                "consent_management",
+                ":ConsentPublicId",
+                "disable_app_sharing"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ConsentPublicId",
+                  "description": "(Required) The consent id. This value is returned in the GET Consent List as `id`."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "v4",
+                  "key": "version",
+                  "description": "(Required) API version. Indicates which FDX version is in use."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9b81f651-1bbc-45be-85d4-a55b4fb015dc",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":version",
+                    "consent_management",
+                    ":ConsentPublicId",
+                    "disable_app_sharing"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ConsentPublicId",
+                      "description": "(Required) The consent id. This value is returned in the GET Consent List as `id`."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "v4",
+                      "key": "version",
+                      "description": "(Required) API version. Indicates which FDX version is in use."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"_sadfa3CKHJ23LKJHKJHLlNaODPmH1LqSb4\",\n  \"application_name\": \"Centz\",\n  \"application_icon_url\": \"https://www.example.com\",\n  \"created_at\": \"2024-06-14T19:48:18.354Z\",\n  \"last_accessed\": \"2024-05-14T19:48:31.352Z\",\n  \"accounts\": [\n    {\n      \"enabled\": true,\n      \"nickname\": \"Lacrosse Fund\",\n      \"account_id\": \"1234123412341234\",\n      \"account_number_display\": \"XXXXXXXX1111\"\n    },\n    {\n      \"enabled\": true,\n      \"nickname\": \"Lacrosse Fund\",\n      \"account_id\": \"1234123412341234\",\n      \"account_number_display\": \"XXXXXXXX1111\"\n    }\n  ],\n  \"auto_enable_future_accounts\": true,\n  \"consented_on\": \"2024-05-14T19:48:18.352Z\",\n  \"revoked_at\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://{{baseurl}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "69d909ed-5c20-4400-930c-f488ac51cfb5",
+    "name": "Consent Management V4 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for embedding the consent management dashboard into your customer-facing experience.\n\nContact Support:\n Name: MX",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Consent Management V4 API",
+    "version": "4.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "consent_management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Consent list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://{baseurl}/api/:version/consent_management",
+            "params": [
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "API version. Indicates which FDX version is in use."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns all data sharing information for an end user. Use this endpoint to list an end user's current data sharing choices. Each of the end user's connected apps has a separate consent which is detailed in the response by a consent object. The consent object includes details such as the app's id, name, icon, and the sharing status of the end-user's accounts."
+        },
+        {
+          "info": {
+            "name": "Update Auto Access",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{baseurl}/api/:version/consent_management/:ConsentPublicId/accounts",
+            "params": [
+              {
+                "name": "ConsentPublicId",
+                "value": "",
+                "type": "path",
+                "description": "The consent id. This value is returned in the GET Consent List as `id`."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "API version. Indicates which FDX version is in use."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Set a consented app's auto update status. Use this endpoint to allow or disallow an app to automatically add new accounts to an end user's consent. This sets the consent object's `auto_enable_future_accounts` field to true or false."
+        },
+        {
+          "info": {
+            "name": "Update Consented Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{baseurl}/api/:version/consent_management/:ConsentPublicId/accounts/:AccountId",
+            "params": [
+              {
+                "name": "ConsentPublicId",
+                "value": "",
+                "type": "path",
+                "description": "The consent id. This value is returned in the GET Consent List as `id`."
+              },
+              {
+                "name": "AccountId",
+                "value": "",
+                "type": "path",
+                "description": "The account id selected for update."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "API version. Indicates which FDX version is in use."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Updates a consent by enabling or disabling an account. Use this endpoint when an end user wants to change whether or not an account is shared with an app."
+        },
+        {
+          "info": {
+            "name": "Revoke Consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "http://{baseurl}/api/:version/consent_management/:ConsentPublicId/disable_app_sharing",
+            "params": [
+              {
+                "name": "ConsentPublicId",
+                "value": "",
+                "type": "path",
+                "description": "The consent id. This value is returned in the GET Consent List as `id`."
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path",
+                "description": "API version. Indicates which FDX version is in use."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Disables the selected consent and updates `revoked_at` with current time. Use this endpoint when an end user wants to stop all data sharing with an app."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

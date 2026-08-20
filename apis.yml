@@ -42,6 +42,15 @@ accessModel:
   method: manual
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
+- Financial-Services
+- Banking
+- United States
+- Open Finance
+- Data Aggregation
+- FDX
+- Fintech
+- Financial Data
+tags_raw:
 - Financial Services
 - Banking
 - United States
@@ -90,6 +99,11 @@ apis:
     that consumers can grant, modify, and revoke at any time.
   humanURL: https://docs.mx.com/products/data/data-access
   tags:
+  - Open Finance
+  - FDX
+  - Authentication
+  - Data Access
+  tags_raw:
   - Open Finance
   - FDX
   - OAuth

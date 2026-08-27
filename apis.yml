@@ -63,34 +63,6 @@ created: '2026-07-23'
 modified: '2026-07-23'
 specificationVersion: '0.23'
 apis:
-- aid: mx:mx-platform-api
-  name: MX Platform API
-  description: >-
-    The MX Platform API aggregates and enhances financial data, connecting apps and websites to tens of
-    thousands of financial institutions. Covers users, members, accounts, transactions, categorization,
-    insights, verification, and widgets. OpenAPI 3.0 (version v20250224), HTTP Basic authentication.
-  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
-  baseURL: https://api.mx.com
-  tags:
-  - Financial Data
-  - Aggregation
-  - Data Enhancement
-  - Verification
-  properties:
-  - type: OpenAPI
-    url: openapi/mx-platform-api-openapi.yml
-  - type: Documentation
-    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
-  - type: APIReference
-    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
-  - type: Authentication
-    url: https://docs.mx.com/resources/oauth-guide
-  - type: MCPServer
-    url: mcp/mx-mcp.yml
-  - type: ToolCrosswalk
-    url: mcp/mx-tool-crosswalk.yml
-  - type: Overlay
-    url: overlays/mx-platform-api-overlay.yaml
 - aid: mx:mx-data-access
   name: MX Data Access
   description: >-
@@ -111,15 +83,657 @@ apis:
   properties:
   - type: Documentation
     url: https://docs.mx.com/products/data/data-access
-- aid: mx:mx-consent-management-openapi
-  name: MX Consent Management V4 API
-  description: MX Consent Management V4 API from MX — 4 path(s) described in OpenAPI.
+- aid: mx:mx-accounts-api
+  name: MX Accounts API
+  description: >-
+    The Accounts endpoints represent a user's checking, savings, mortgage, 401(k), or other types of accounts
+    held by a financial institution.
+
+
+    An account belongs to a `member`, which represents the user's overall relationship with a particular
+    financial institution. A checking account may be just one part of a larger relationship that could
+    also include a car loan and a savings account.
+
+
+    Accounts—and the transactions associated with them—are updated every 24 hours, unless the associated
+    `user` is disabled.
+
+
+    You can also create manual accounts. Since a manual account has no credentials tied to the member,
+    the account will never aggregate or include data from a data feed. All manual accounts are automatically
+    created under the Manual Institution member.
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
+  tags:
+  - accounts
   properties:
   - type: OpenAPI
-    url: openapi/mx-consent-management-openapi.yml
+    url: openapi/mx-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-ach-return-api
+  name: MX ach return API
+  description: >-
+    The features documented here are in a beta state, and this documentation is considered draft material
+    subject to frequent change.
+
+
+    Using our Platform API, you can securely submit ACH Returns to reduce your ACH return rates and automate
+    your ACH return process.
+
+
+    You can query the status and outcomes of your submitted ACH returns to track progress and access resolution
+    details.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - ach return
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-ach-return-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-budgets-api
+  name: MX Budgets API
+  description: >-
+    Use these endpoints to create and manage budgets for your end users.
+
+
+    You can create a budget for a specific category or autogenerate a budget for several categories based
+    on existing transactions.
+
+
+    Each budget has a `category_guid`, relating to one of the [categories](docs.mx.com/api-reference/platform-api/reference/categories#default-categories-and-subcategories).
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - budgets
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-budgets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-categories-api
+  name: MX Categories API
+  description: "A `transaction` can have its `category` set to one of MX’s default categories or a custom\
+    \ category for a specific `user`. \n\nSee [Default Categories and Subcategories](docs.mx.com/api-reference/platform-api/reference/categories#default-categories-and-subcategories)\
+    \ for a complete list."
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - categories
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-categories-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-consent-management-api
+  name: MX Consent Management API
+  description: Consent Management
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - consent_management
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-consent-management-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-goals-api
+  name: MX Goals API
+  description: >-
+    Use these endpoints to create and manage goals for a `user`. You can also reposition goals to adjust
+    their priority levels.
+
+
+    Every goal has a track type and a meta type.
+
+
+    The [track type](docs.mx.com/api-reference/platform-api/reference/goals/#goal-track-type) is the overall
+    classification of the goal (debt, savings, retirement, or emergency fund) while the [meta type](docs.mx.com/api-reference/platform-api/reference/goals/#goal-meta-type)
+    is the specific classification (like college, house, vacation, and so on).
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - goals
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-goals-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-insights-api
+  name: MX Insights API
+  description: >-
+    Use these endpoints to build customizable user experiences in UIs powered by our Financial Insights
+    data.
+
+
+    With Financial Insights, your users will receive personalized insights based on their transaction
+    history.
+
+
+    Want to learn more about the product? See [Financial Insights](docs.mx.com/products/experience/insights).
+
+
+    Looking for a guide to use these endpoints? See [Build Your Own Insights UI](docs.mx.com/products/experience/insights/integration-guides/insights-api-guide).
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - insights
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-insights-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-institutions-api
+  name: MX Institutions API
+  description: >-
+    Institutions represent a financial institution.
+
+
+    A single real-world financial institution may have several `institution` objects on the MX platform.
+
+
+    For example, the mortgage division of a financial institution might use a separate system than its
+    everyday banking division, which is different from its credit card division.
+
+
+    For more info, see [Institutions Overview](docs.mx.com/api-reference/reference/institutions).
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - institutions
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-institutions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-investment-holdings-api
+  name: MX investment holdings API
+  description: >-
+    Investment Data Enhancement lets you connect to an end user's financial institution and retrieve cleansed
+    and enhanced investment data. By combining investment data with retail banking information, you get
+    comprehensive insights into customer financial behaviors, risk tolerance, and investment strategies.
+
+
+    You can [read a user's holding](docs.mx.com/api-reference/platform-api/reference/read-holding), [list
+    all their holdings](docs.mx.com/api-reference/platform-api/reference/list-holdings), or list their
+    holdings by [account](docs.mx.com/api-reference/platform-api/reference/list-holdings-by-account) or
+    [member](docs.mx.com/api-reference/platform-api/reference/list-holdings-by-member).
+
+
+    You can also [deactivate a user](docs.mx.com/api-reference/platform-api/reference/deactivate-user)
+    from the Investment Data Enhancement. This is non-billable.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - investment holdings
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-investment-holdings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-jobs-api
+  name: MX Jobs API
+  description: The jobs API from MX — 1 operation(s) for jobs.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-managed-data-deprecated-api
+  name: MX managed data [deprecated] API
+  description: >-
+    The managed data [deprecated] API from MX — 7 operation(s) for managed data [deprecated].
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - managed data [deprecated]
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-managed-data-deprecated-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-members-api
+  name: MX Members API
+  description: >-
+    Members represent the connection between an end user and a financial institution. This institution
+    may represent your institution or another one from which MX is aggregating data.
+
+
+    For more info, see [Members Overview](docs.mx.com/api-reference/reference/members).
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - members
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-members-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-merchants-api
+  name: MX Merchants API
+  description: >-
+    Merchants are representations of a transaction’s origin. For example, if you buy a coffee at Starbucks,
+    the transaction merchant will be `Starbucks`.
+
+
+    Use the `merchant_guid` and a `merchant_location_guidon` any `transaction` object to access Merchant
+    endpoints for details like the merchant’s name, logo URL, website, street address, and more.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - merchants
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-merchants-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-microdeposits-api
+  name: MX Microdeposits API
+  description: "Microdeposits is an additional verification method that allows you to verify account details\
+    \ and navigate the process of using microdeposits and the automated clearing house (ACH) system. \n\
+    \nMake two, small ACH deposits into a consumer's account using the provided account and routing number.\
+    \ You can then require that the end user confirm the exact amount of each deposit to verify that they\
+    \ own the account and meet NACHA’s account verification.\n\nFor more info, including process flows,\
+    \ setting block lists, and more, see [Microdeposits](docs.mx.com/products/connectivity/microdeposits)."
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - microdeposits
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-microdeposits-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-monthly-cash-flow-profile-api
+  name: MX monthly cash flow profile API
+  description: >-
+    The monthly cash flow profile API from MX — 1 operation(s) for monthly cash flow profile.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - monthly cash flow profile
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-monthly-cash-flow-profile-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-notifications-api
+  name: MX Notifications API
+  description: >-
+    You can only use notifications endpoints if you’re using the MX mobile application.
+
+
+    All notifications created through the API will be of notification type `API_NOTIFICATION`, channel
+    `PUSH`, and will not be associated to an entity. No other channels are supported.
+
+
+    The read and list endpoints can return any notification associated with the `user`, including notifications
+    created by MX for other channels besides `PUSH`.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - notifications
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-notifications-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-processor-token-api
+  name: MX processor token API
+  description: The processor token API from MX — 6 operation(s) for processor token.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - processor token
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-processor-token-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-rewards-api
+  name: MX Rewards API
+  description: The rewards API from MX — 4 operation(s) for rewards.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - rewards
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-rewards-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-spending-plan-api
+  name: MX spending plan API
+  description: >-
+    Use the Spending Plan endpoints to create your own version of our [Spending Plan Widget](docs.mx.com/products/experience/pfm/legacy-widget-overviews/spending-plan),
+    which helps end users track their spending throughout the month.
+
+
+    To understand key terms and how to best use these endpoints, see [Build Your Own Spending Plan UI](docs.mx.com/products/experience/pfm/integration-guides/build-your-own-spending-plan-ui).
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - spending plan
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-spending-plan-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-statements-api
+  name: MX Statements API
+  description: >-
+    With Statements, you can retrieve a user's monthly account statements in PDF format. This data can
+    be used for solutions like personal financial management or risk analysis.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - statements
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-statements-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-taggings-api
+  name: MX Taggings API
+  description: "Tags and taggings are two resources in the MX Platform API that, when used together, give\
+    \ end users more control over organizing their transactions. \n\nA tag is a custom label that can\
+    \ be applied to a transaction.\n\nAfter you create a tag, use it for tagging. This means you should\
+    \ actually apply the tag to a particular transaction.\n\nTogether, they're a powerful tool for personalization,\
+    \ customization, and money management.\n\nFor a guide on creating a tag and then applying it to a\
+    \ specific transaction with a tagging, see [Custom Tags and Taggings](docs.mx.com/products/experience/pfm/integration-guides/personalization/)."
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - taggings
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-taggings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-tags-api
+  name: MX Tags API
+  description: "Tags and taggings are two resources in the MX Platform API that, when used together, give\
+    \ end users more control over organizing their transactions. \n\nA tag is a custom label that can\
+    \ be applied to a transaction.\n\nAfter you create a tag, use it for tagging. This means you should\
+    \ actually apply the tag to a particular transaction.\n\nTogether, they're a powerful tool for personalization,\
+    \ customization, and money management.\n\nFor a guide on creating a tag and then applying it to a\
+    \ specific transaction with a tagging, see [Custom Tags and Taggings](docs.mx.com/products/experience/pfm/integration-guides/personalization/)."
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - tags
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-tags-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-transaction-rules-api
+  name: MX transaction rules API
+  description: >-
+    Transaction Rules allow users to automatically recategorize or rename all similar transactions according
+    to their preferences. This only applies to future transactions.
+
+
+    When recategorizing or renaming a transaction, the user will be asked whether they want the new data
+    to apply to the selected transaction or to all future transactions. If they choose to apply it to
+    all future transactions, it will create a transaction rule which will automatically apply the changes
+    going forward.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - transaction rules
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-transaction-rules-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-transactions-api
+  name: MX Transactions API
+  description: >-
+    Transactions represent any instance in which money moves into or out of an account. This could be
+    a purchase at a business, a payroll deposit, a transfer from one account to another, an ATM withdrawal,
+    and so on.
+
+
+    Transactions are created automatically when a member is successfully aggregated.
+
+
+    Each `transaction` belongs to only one `account`.
+
+
+    For more info, see [Transactions Overview](docs.mx.com/api-reference/reference/transactions).
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-users-api
+  name: MX Users API
+  description: >-
+    Users represent an end user using the Platform API through your web or mobile app.
+
+
+    Users are created by MX clients and belong to a specific [client](docs.mx.com/products/connectivity/overview/data-architecture/#clients)
+    on the platform.
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-users-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-verifiable-credentials-api
+  name: MX verifiable credentials API
+  description: "MX provides Verifiable Credential endpoints that comply with web5 standards. \n\nFor more\
+    \ info, see [Verifiable Credentials Overview](docs.mx.com/api-reference/reference/verifiable-credentials)."
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - verifiable credentials
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-verifiable-credentials-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
+- aid: mx:mx-widgets-api
+  name: MX Widgets API
+  description: >-
+    Use the [Request Widget URL](docs.mx.com/api-reference/platform-api/reference/request-widget-url)
+    endpoint to generate a URL that loads one of our widgets.
+
+
+    Many request body parameters only work for some widgets.
+
+
+    For more info, including widget types, see [Widgets Overview](docs.mx.com/api-reference/reference/widgets).
+  humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  baseURL: https://api.mx.com
+  tags:
+  - widgets
+  properties:
+  - type: OpenAPI
+    url: openapi/mx-widgets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mx.com/api-reference/platform-api/overview/architecture-and-security
+  - type: APIReference
+    url: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
+  - type: Authentication
+    url: https://docs.mx.com/resources/oauth-guide
+  - type: ToolCrosswalk
+    url: mcp/mx-tool-crosswalk.yml
 common:
+- type: MCPServer
+  url: mcp/mx-mcp.yml
+- type: Overlay
+  url: overlays/mx-platform-api-overlay.yaml
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/mx/overview
 - type: TrustCenter

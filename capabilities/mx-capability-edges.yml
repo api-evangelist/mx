@@ -1,0 +1,26 @@
+slug: mx
+provider: MX
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: ach return
+  spec_file: mx-ach-return-api-openapi.yml
+  capability_id: BC-1340.30
+  capability_id_l1: BC-1340
+  capability_name: Clearing & Settlement Management
+  confidence: 0.7
+  evidence: POST /ach_returns createACHReturn Create ACH Return; GET /ach_returns/{ach_return_guid} Read
+    ACH Return
+  reason: ACH returns are exception items in domestic ACH clearing; creating and reading ACH return records
+    supports clearing/settlement operations. Sub-capability inference is reasonable but the spec gives
+    little detail.

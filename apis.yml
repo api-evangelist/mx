@@ -730,6 +730,9 @@ apis:
   - type: ToolCrosswalk
     url: mcp/mx-tool-crosswalk.yml
 common:
+- type: CapabilityMap
+  url: capabilities/mx-capability-edges.yml
+  name: MX Business Capability Map
 - type: MCPServer
   url: mcp/mx-mcp.yml
 - type: Overlay

@@ -1,0 +1,566 @@
+openapi: 3.2.0
+info:
+  contact:
+    name: MX Platform API
+    url: https://www.mx.com/products/platform-api
+  description: 'The MX Platform API is a powerful, fully-featured API designed to make aggregating and enhancing financial data easy and reliable. It can seamlessly connect your app or website to tens of thousands of financial institutions.
+
+
+    ## What''s Changed?
+
+
+    Several endpoints, headers, and fields changed in `v20250224`. For more on breaking changes, refer to our [versioning](/api-reference/platform-api/overview/versioning#v20250224) and [migration](/api-reference/platform-api/overview/migration) guides.
+
+
+    ## Version Header
+
+    Versions are set in the `Accept-Version` header of API requests. Version numbers correspond with the date associated with that version.  The example below uses the version `v20250224`.
+
+
+    ```
+
+    -H ''Accept: application/json''
+
+    -H ''Accept-Version: v20250224''
+
+    ```
+
+
+    ---
+
+    '
+  title: MX Platform Widgets API
+  version: '20250224'
+servers:
+- url: https://int-api.mx.com
+- url: https://api.mx.com
+security:
+- basicAuth: []
+tags:
+- name: widgets
+  description: 'Use the [Request Widget URL](docs.mx.com/api-reference/platform-api/reference/request-widget-url) endpoint to generate a URL that loads one of our widgets.
+
+
+    Many request body parameters only work for some widgets.
+
+
+    For more info, including widget types, see [Widgets Overview](docs.mx.com/api-reference/reference/widgets).
+
+    '
+paths:
+  /users/{user_identifier}/members/{member_identifier}/oauth_window_uri:
+    get:
+      description: This endpoint will generate an `oauth_window_uri` for the specified `member`.
+      operationId: requestOAuthWindowURI
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/clientRedirectUrl'
+      - $ref: '#/components/parameters/enableApp2app'
+      - $ref: '#/components/parameters/memberIdentifier'
+      - $ref: '#/components/parameters/referralSource'
+      - $ref: '#/components/parameters/skipAggregation'
+      - $ref: '#/components/parameters/uiMessageWebviewUrlScheme'
+      - $ref: '#/components/parameters/userIdentifier'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthWindowResponseBody'
+          description: OK
+      summary: Request oauth window uri
+      tags:
+      - widgets
+  /users/{user_identifier}/widget_urls:
+    post:
+      description: 'Get an embeddable URL for integrating a widget into your website or app. The URL expires after ten minutes or upon first use, whichever occurs first. You''ll need to obtain a new URL each time the page loads or reloads.
+
+
+        Include the `widget_type` in the request body to specify which widget you want to embed—the Connect Widget, a Personal Financial Management widget, or an Insights widget. Some request parameters are specific to certain widget types.
+
+
+        To embed the Connect Widget, set `widget_type` to `connect_widget`.
+
+
+        For a full list of available widget types, see [Widget Types](/api-reference/platform-api/reference/widgets#widget-types).
+
+        '
+      operationId: requestWidgetURL
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/acceptLanguage'
+      - $ref: '#/components/parameters/xCallback'
+      - $ref: '#/components/parameters/userIdentifier'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                widget_url:
+                  $ref: '#/components/schemas/WidgetRequest'
+        description: The widget_url configuration options.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WidgetResponseBody'
+          description: OK
+      summary: Request widget URL
+      tags:
+      - widgets
+components:
+  parameters:
+    memberIdentifier:
+      description: Use either the member `id` you defined or the MX-defined member `guid`. See [MX-Defined GUIDs vs IDs Defined by You](/products/connectivity/overview/held-data/#mx-defined-guids-vs-ids-defined-by-you).
+      name: member_identifier
+      in: path
+      required: true
+      schema:
+        type: string
+    enableApp2app:
+      description: This indicates whether OAuth app2app behavior is enabled for institutions that support it. Defaults to `true`. When set to `false`, any `oauth_window_uri` generated will **not** direct the end user to the institution's mobile application. This setting is not persistent. This setting currently only affects Chase institutions.
+      example: 'false'
+      in: query
+      name: enable_app2app
+      schema:
+        type: string
+    referralSource:
+      description: Must be either `BROWSER` or `APP` depending on the implementation. Defaults to `BROWSER`.
+      example: APP
+      in: query
+      name: referral_source
+      schema:
+        type: string
+    acceptVersion:
+      name: Accept-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: v20250224
+        example: v20250224
+      description: MX Platform API version.
+    xCallback:
+      description: The base64 encoded string defined in this header will be returned in the [Member](/resources/webhooks/member/) and [Member Data Updated](/resources/webhooks/member/#member-data-updated) webhooks. This allows you to trace user interactions and workflows initiated externally and internally in the MX Platform. Max 1024 characters.
+      example: 813e50bd-4a7e-4517-b6bb-9eef65a68cbd
+      in: header
+      name: X-CALLBACK-PAYLOAD
+      schema:
+        type: string
+    acceptLanguage:
+      description: The desired language of the widget.
+      example: en-US
+      in: header
+      name: Accept-Language
+      schema:
+        type: string
+    skipAggregation:
+      description: Setting this parameter to `true` will prevent the member from automatically aggregating after being redirected from the authorization page.
+      example: false
+      in: query
+      name: skip_aggregation
+      schema:
+        type: boolean
+    userIdentifier:
+      description: Use either the user `id` you defined or the MX-defined user `guid`. See [MX-Defined GUIDs vs IDs Defined by You​](/products/connectivity/overview/held-data/#mx-defined-guids-vs-ids-defined-by-you).
+      in: path
+      required: true
+      name: user_identifier
+      schema:
+        type: string
+    clientRedirectUrl:
+      description: A URL that MX will redirect to at the end of OAuth with additional query parameters. Only available with `referral_source=APP`.
+      example: https://{yoursite.com}
+      in: query
+      name: client_redirect_url
+      schema:
+        type: string
+    uiMessageWebviewUrlScheme:
+      description: A scheme for routing the user back to the application state they were previously in. Only available with `referral_source=APP`.
+      in: query
+      name: ui_message_webview_url_scheme
+      schema:
+        type: string
+  schemas:
+    WidgetResponse:
+      properties:
+        type:
+          description: 'This determines which widget URL you''ll receive. Additional request parameters may only apply to some widget types.
+
+            '
+          example: connect_widget
+          type:
+          - string
+          - 'null'
+          enum:
+          - accounts_widget
+          - mini_accounts_widget
+          - actionable_integration_widget
+          - budgets_widget
+          - mini_budgets_widget
+          - cash_flow_widget
+          - mini_cash_flow_widget
+          - connect_widget
+          - connections_widget
+          - debts_widget
+          - finstrong_widget
+          - mini_finstrong_widget
+          - goals_widget
+          - help_widget
+          - master_widget
+          - money_dashboard_widget
+          - net_worth_widget
+          - mini_net_worth_widget
+          - notifications_settings_widget
+          - recurringtransactions_widget
+          - mini_recurringtransactions_widget
+          - settings_widget
+          - spending_widget
+          - mini_spending_widget
+          - spending_plan_widget
+          - mini_spending_plan_widget
+          - transaction_rules_widget
+          - transactions_widget
+          - trends_widget
+          - mini_trends_widget
+        url:
+          description: The URL for accessing the widget.
+          example: https://int-widgets.moneydesktop.com/md/connect/yxcdk7f1nb99jwApp34lA24m0AZ8rzprgmw17gm8z8h2AzjyAnd1rj42qfv42r3xnn07Amfwlg3j09hwp8bkq8tc5z21j33xjggmp2qtlpkz2v4gywfhfn31l44tx2w91bfc2thc58j4syqp0hgxcyvA4g7754hk7gjc56kt7tc36s45mmkdz2jqqqydspytmtr3dAb9jh6fkb24f3zkfpdjj0v77f0vmrtzvzxkmxz7dklsq8gd0gstkbhlw5bgpgc3m9mAtpAcr2w15gwy5xc4blgxppl42Avnm63291z3cyp0wm3lqgmvgzdAddct423gAdqxdlfx5d4mvc0ck2gt7ktqgks4vxq1pAy5
+          type:
+          - string
+          - 'null'
+        user_id:
+          description: The unique partner-defined identifier for the user.
+          example: u-1234
+          type:
+          - string
+          - 'null'
+      type: object
+    WidgetRequest:
+      properties:
+        client_redirect_url:
+          description: 'Only use this option if the `widget_type` is set to `connect_widget`.
+
+
+            This determines the redirect destination at the end of OAuth when used with `is_mobile_webview: true` or `oauth_referral_source: ''APP''`.
+
+            '
+          example: https://{yoursite.com}
+          type: string
+        color_scheme:
+          description: 'This option can be passed to any `widget_type` but will not affect [legacy PFM widgets](/products/experience/pfm/legacy-widget-overviews/).
+
+
+            Load the widget with the specified `color_scheme`; options are `light`, `dark`, and `browser` (respects user''s browser setting). Defaults to `light`.
+
+            '
+          example: light
+          type:
+          - string
+          - 'null'
+          enum:
+          - light
+          - browser
+          - dark
+        current_institution_code:
+          description: 'Only use this option if the `widget_type` is set to `connect_widget`.
+
+
+            Load the widget into the credential view for the specified institution.
+
+            '
+          example: mx_bank
+          type:
+          - string
+          - 'null'
+        current_institution_guid:
+          description: 'Only use this option if the `widget_type` is set to `connect_widget`.
+
+
+            Load the widget into the credential view for the specified institution.
+
+            '
+          example: INS-f1a3285d-e855-b61f-6aa7-8ae575c0e0e9
+          type: string
+        current_member_guid:
+          description: 'Only use this option if the `widget_type` is set to `connect_widget`.
+
+
+            Load the widget into a specific member that contains an error or requires multifactor authentication. The widget will determine the best view to load based on the member''s current state.
+
+
+            This option takes precedence over `current_institution_code` and `current_institution_guid`.
+
+            '
+          example: MBR-7c6f361b-e582-15b6-60c0-358f12466b4b
+          type:
+          - string
+          - 'null'
+        current_microdeposit_guid:
+          example: MIC-1234567890
+          description: Only use this option if the `widget_type` is set to `connect_widget`. This loads the Connect Widget to whichever step the microdeposit process is currently in, which may be the verify amounts step, an error state, and so on. This field is required if attempting to load a specific microdeposit for end users to enter amounts.
+          type: string
+        data_request:
+          $ref: '#/components/schemas/DataRequest'
+        deep_link_params:
+          $ref: '#/components/schemas/DeepLinkParams'
+          type: object
+        disable_background_agg:
+          description: 'Only use this option if the `widget_type` is set to `connect_widget`. This determines whether background aggregation is enabled or disabled for the `member` created by the Connect Widget. Defaults to `false` in `aggregation` mode and `true` in `verification` mode. A global default for all members can be set by reaching out to MX.
+
+            '
+          example: false
+          type: boolean
+        disable_institution_search:
+          description: 'Only use this option if the `widget_type` is set to `connect_widget`.
+
+
+            When set to `true`, the institution search feature in the Connect Widget will be disabled and end users will not be able to navigate to it. Defaults to `false`.
+
+
+            This option must be used with `current_institution_code`, `current_institution_guid`, or `current_member_guid`.
+
+            '
+          example: false
+          type:
+          - boolean
+          - 'null'
+        enable_app2app:
+          example: false
+          type: boolean
+          description: 'Only use this option if the `widget_type` is set to `connect_widget`. This indicates whether OAuth app2app behavior is enabled for institutions that support it. Defaults to `true`. When set to `false`, the widget will **not** direct the end user to the institution''s mobile application. This setting is not persistent. This setting currently only affects Chase institutions.
+
+            '
+        include_identity:
+          example: false
+          type: boolean
+          description: 'Use `data_request.products` instead to set your products.
+
+
+            Only use this option if the `widget_type` is set to `connect_widget`. This determines whether account owner identification data (AOI, previously called "identity verification") aggregates after the data that''s specified by the `mode` finishes aggregating. Defaults to `false`. This can be set in either `aggregation` or `verification` mode. Setting this to `true` will produce the following behaviors:
+
+
+            - The widget will only search for and display institutions that support the data the `mode` (`aggregation` or `verification`) is aggregating and AOI.
+
+            - The member connected postMessage event will not be sent until both aggregations are complete.
+
+            '
+        include_transactions:
+          description: 'Use `data_request.products` instead to set your products.
+
+
+            Only use this option if the `widget_type` is set to `connect_widget`. This determines whether transaction data are retrieved. Defaults to `true` in `aggregation` mode and `false` in `verification` mode. This can be set in either aggregation or verification mode. This option does not affect future foreground or background aggregations.
+
+            '
+          example: true
+          type: boolean
+        insight_guid:
+          example: null
+          type:
+          - string
+          - 'null'
+          description: 'Only use this option if the `widget_type` is set to `pulse_widget`. Set this to the insight guid you want to appear at the top of the insights feed.
+
+            '
+        iso_country_code:
+          example:
+          - US
+          - CA
+          type: array
+          items:
+            type: string
+          description: 'An array of strings that filters institutions in the widget by the specified country code. Acceptable codes include `US`, `CA`, and `MX` (Mexico).
+
+            '
+        is_mobile_webview:
+          example: false
+          type: boolean
+          description: 'This option is for every `widget_type`. This configures the widget to render in a mobile WebView. JavaScript event postMessages are replaced with URL updates.
+
+            '
+        microwidget_instance_id:
+          example: null
+          type:
+          - string
+          - 'null'
+          description: 'Only use this option if the `widget_type` is set to `micro_pulse_carousel_widget`. Set this to a unique value for each instance of the Micro Widget. This lets us collect unique data for each instance of the widget.
+
+            '
+        locale:
+          description: "Sets the language of the widget. \n\nIf you're requesting the Connect or Connections Widgets, you must use the Accept-Language header.\n"
+          example: fr-CA
+          type: string
+        mode:
+          example: aggregation
+          type: string
+          description: 'Use `data_request.products` instead to set your products.
+
+
+            Only use this option if the `widget_type` is set to `connect_widget`. `mode` is the most important option for the Connect Widget. This determines what kind of process Connect will run, which affects how you should set many other options. Defaults to `aggregation`. `aggregation` mode retrieves account and transaction data; in other words, this runs a standard aggregation. `verification` mode retrieves account numbers and routing/transit numbers; in other words, it runs an Instant Account Verification (IAV). By default, verification mode does not retrieve transaction data; this default can be modified with secondary options. By default, background aggregation is disabled for all members created in verification mode; this default can be modified with secondary options.
+
+            '
+        oauth_referral_source:
+          example: BROWSER
+          type: string
+          description: 'Only use this option if the `widget_type` is set to `connect_widget`. This determines how MX will respond to the result of an OAuth flow. When set to `APP`, MX will redirect to the URI specified in the `ui_message_webview_url_scheme`. When set to `BROWSER`, MX will send a postMessage but not redirect. If `is_mobile_webview` is `true`, this defaults to `APP`. If false, it defaults to `BROWSER`.
+
+            '
+        style:
+          $ref: '#/components/schemas/Style'
+        ui_message_version:
+          example: 4
+          type: integer
+          description: 'This option is for all `widget_type`s. This determines which version of postMessage events are triggered. Defaults to 4. All new implementations must use version 4. Prior versions are deprecated.
+
+            '
+        ui_message_webview_url_scheme:
+          type: string
+          description: 'Only use this option if the `widget_type` is set to `connect_widget`. This is a client-defined scheme used in OAuth redirects in WebViews; also used in URL updates when these replace postMessages in WebViews. Defaults to `mx`.
+
+            '
+        update_credentials:
+          example: false
+          type: boolean
+          description: 'Only use this option if the `widget_type` is set to `connect_widget`. Load the widget into a view that allows them to update the current member. Optionally used with `current_member_guid`. This option should be used sparingly. The best practice is to use `current_member_guid` and let the widget resolve the issue.
+
+            '
+        use_cases:
+          type: array
+          description: The use case that will be associated with any members created through the widget. Valid values are `PFM` and/or `MONEY_MOVEMENT`. This is **required** if you've met with MX and have opted in to using this field.
+          items:
+            type: string
+            enum:
+            - MONEY_MOVEMENT
+            - PFM
+          example:
+          - PFM
+        widget_type:
+          example: connect_widget
+          type: string
+          description: 'This determines which widget URL you''ll receive.
+
+
+            See [Widget Types](/api-reference/platform-api/reference/widgets) for a list of potential values. Additional request parameters may only apply to some widget types.
+
+            '
+      required:
+      - widget_type
+      type: object
+    SupportedProducts:
+      type: string
+      enum:
+      - account_verification
+      - identity_verification
+      - transactions
+      - transaction_history
+      - statements
+      - investments
+      - rewards
+    OAuthWindowResponseBody:
+      properties:
+        member:
+          $ref: '#/components/schemas/OAuthWindowResponse'
+      type: object
+    Style:
+      type: object
+      description: Contains fields to customize the appearance of a widget.
+      required:
+      - font_name
+      properties:
+        font_name:
+          type: string
+          description: Sets the widget's font. Pass any Google font to change it.
+          example: Roboto
+    OAuthWindowResponse:
+      properties:
+        guid:
+          description: The unique identifier for the member. Defined by MX.
+          example: MBR-df96fd60-7122-4464-b3c2-ff11d8c74f6f
+          type:
+          - string
+          - 'null'
+        oauth_window_uri:
+          description: When connecting a member using OAuth, this field will contain the URL to send the user to in order to authenticate, otherwise it will be blank.
+          example: https://mxbank.mx.com/oauth/authorize?client_id=b8OikQ4Ep3NuSUrQ13DdvFuwpNx-qqoAsJDVAQCyLkQ&redirect_uri=https%3A%2F%2Fint-app.moneydesktop.com%2Foauth%2Fredirect_from&response_type=code&scope=openid&state=d745bd4ee6f0f9c184757f574bcc2df2
+          type:
+          - string
+          - 'null'
+      type: object
+    WidgetResponseBody:
+      properties:
+        widget_url:
+          $ref: '#/components/schemas/WidgetResponse'
+      type: object
+    DeepLinkParams:
+      description: Enables widget-specific behavior.
+      properties:
+        account_guid:
+          example: ACT-06d7f44b-caae-0f6e-1384-01f52e75dcb1
+          type: string
+          description: Only use this option if the `widget_type` is set to `spending_widget`. When used with the Legacy Spending Widget, used to filter by account. Contains an `account_guid` (string) optional param.
+        date_range:
+          type: object
+          description: Only use this option if the `widget_type` is set to `spending_widget`. When used with the Legacy Spending widget, used to filter by date range. Set the `date_range` using `start_date` (string) and `end_date` (string).
+          properties:
+            start_date:
+              type: string
+              description: The start date of the range in `YYYY-MM-DD` format.
+              example: '2023-01-01'
+            end_date:
+              type: string
+              description: The end date of the range in `YYYY-MM-DD` format.
+              example: '2023-12-31'
+        launch_integration:
+          example: direct-deposit
+          type: string
+          description: Only use this option if the `widget_type` is set to `actionable_integration_widget`. Launches a deep link integration. Valid value is `direct-deposit`.
+        view:
+          example: manage_income
+          type: string
+          description: When used with the Cash Flow, Settings, or Money Dashboard widget, sets the widget's default view. Valid value for Cash Flow or Money Dashboard Widgets is `manage_income.` Valid values for the Notifications section of the Settings Widget (`notifications_settings_widget`) are `accounts`, `budgets`, or `insights`.
+        widget:
+          example: budgets
+          type: string
+          description: Only use this option if the `widget_type` is set to `master_widget`. Launches a specific view in the Master Widget. Valid values are `accounts`, `budgets`, `cash_flow`, `debts`, `finstrong`, `goals`, `insights`, `investments`, `networth`, `recurringtransactions`, `spending`, `transactions`, and `trends`.
+    DataRequest:
+      type: object
+      description: Contains a products array that specifies the products you want to aggregate.
+      required:
+      - products
+      properties:
+        products:
+          description: Contains the products you want to aggregate upon a successful connection. For accepted products, see [Defining Products](/products/connectivity/overview/intro-to-unified-product-ordering/#defining-products).
+          items:
+            $ref: '#/components/schemas/SupportedProducts'
+          type: array
+  securitySchemes:
+    basicAuth:
+      scheme: basic
+      type: http
+      description: 'The MX Platform API requires basic access authentication using your `client_id` and `api_key`. These credentials must be Base64 encoded and included in the Authorization header of each API request to ensure secure access.
+
+
+        Here''s an example using curl to access `v20250224`. Replace `https://int-api.mx.com/endpoint` with the actual API endpoint you wish to access and your Base64 encoded `client_id` and `api_key`.
+
+
+        ```
+
+        curl -L -X POST `https://int-api.mx.com/endpoint'' \
+
+        -H ''Content-Type: application/json'' \
+
+        -H ''Accept: application/json'' \
+
+        -H ''Accept-Version: v20250224''
+
+        -H ''Authorization: Basic BASE_64_ENCODING_OF{client_id:api_key}''
+
+        ```
+
+        '
+    bearerAuth:
+      type: http
+      scheme: bearer

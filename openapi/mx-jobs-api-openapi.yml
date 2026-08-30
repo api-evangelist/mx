@@ -1,0 +1,174 @@
+openapi: 3.2.0
+info:
+  contact:
+    name: MX Platform API
+    url: https://www.mx.com/products/platform-api
+  description: 'The MX Platform API is a powerful, fully-featured API designed to make aggregating and enhancing financial data easy and reliable. It can seamlessly connect your app or website to tens of thousands of financial institutions.
+
+
+    ## What''s Changed?
+
+
+    Several endpoints, headers, and fields changed in `v20250224`. For more on breaking changes, refer to our [versioning](/api-reference/platform-api/overview/versioning#v20250224) and [migration](/api-reference/platform-api/overview/migration) guides.
+
+
+    ## Version Header
+
+    Versions are set in the `Accept-Version` header of API requests. Version numbers correspond with the date associated with that version.  The example below uses the version `v20250224`.
+
+
+    ```
+
+    -H ''Accept: application/json''
+
+    -H ''Accept-Version: v20250224''
+
+    ```
+
+
+    ---
+
+    '
+  title: MX Platform Jobs API
+  version: '20250224'
+servers:
+- url: https://int-api.mx.com
+- url: https://api.mx.com
+security:
+- basicAuth: []
+tags:
+- name: jobs
+paths:
+  /users/{user_identifier}/jobs/{job_guid}:
+    get:
+      description: 'Use this endpoint to read the attributes of a specific job.
+
+        > **Warning:** New implementations shouldn''t use this endpoint. It is maintained for compatibility with our Nexus API only.
+
+        '
+      tags:
+      - jobs
+      summary: Read job
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/userIdentifier'
+      - $ref: '#/components/parameters/jobGuid'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponseBody'
+          description: OK
+components:
+  schemas:
+    JobResponseBody:
+      properties:
+        job:
+          $ref: '#/components/schemas/JobResponse'
+      type: object
+    JobResponse:
+      properties:
+        created_at:
+          description: The date and time the institution was created, represented in ISO 8601 format with a timestamp.
+          example: '2025-02-13T18:08:00+00:00'
+          type: string
+        error_message:
+          example: null
+          description: If the job returns an error, this field will contain the message of the error.
+          type:
+          - string
+          - 'null'
+        error_message_code:
+          example: null
+          description: Date and time the job finished, represented in ISO 8601 format with timestamp.
+          type:
+          - string
+          - 'null'
+        finished_at:
+          example: '2022-06-16T18:42:43+00:00'
+          type: string
+          description: The date and time the job finished, represented in ISO 8601 format with a timestamp.
+        institution_guid:
+          example: INS-1572a04c-912b-59bf-5841-332c7dfafaef
+          type: string
+          description: Unique identifier for the institution the job is attached to. Defined by MX.
+        is_authenticated:
+          example: true
+          type: boolean
+          description: If the member's credentials have been authenticated, this field will be true. Otherwise, this field will be false.
+        member_guid:
+          example: MBR-84ca0882-ad6c-4f10-817f-c8c0de7424fa
+          type: string
+          description: Unique identifier for the member the job is attached to. Defined by MX.
+        started_at:
+          example: '2022-06-16T18:42:30+00:00'
+          type: string
+          description: Date and time the job started, represented in ISO 8601 format with timestamp.
+        status:
+          example: 6
+          description: The status of the job.
+          type: integer
+        status_name:
+          example: COMPLETED
+          description: The name of the status.
+        updated_at:
+          example: '2022-06-16T18:42:43+00:00'
+          type: string
+          description: Date and time the job was updated, represented in ISO 8601 format with timestamp.
+        user_guid:
+          example: USR-11141024-90b3-1bce-cac9-c06ced52ab4c
+          type: string
+          description: Unique identifier for the user the job is attached to. Defined by MX.
+  parameters:
+    acceptVersion:
+      name: Accept-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: v20250224
+        example: v20250224
+      description: MX Platform API version.
+    userIdentifier:
+      description: Use either the user `id` you defined or the MX-defined user `guid`. See [MX-Defined GUIDs vs IDs Defined by You​](/products/connectivity/overview/held-data/#mx-defined-guids-vs-ids-defined-by-you).
+      in: path
+      required: true
+      name: user_identifier
+      schema:
+        type: string
+    jobGuid:
+      description: The unique identifier for the job. Defined by MX.
+      name: job_guid
+      required: true
+      in: path
+      schema:
+        type: string
+  securitySchemes:
+    basicAuth:
+      scheme: basic
+      type: http
+      description: 'The MX Platform API requires basic access authentication using your `client_id` and `api_key`. These credentials must be Base64 encoded and included in the Authorization header of each API request to ensure secure access.
+
+
+        Here''s an example using curl to access `v20250224`. Replace `https://int-api.mx.com/endpoint` with the actual API endpoint you wish to access and your Base64 encoded `client_id` and `api_key`.
+
+
+        ```
+
+        curl -L -X POST `https://int-api.mx.com/endpoint'' \
+
+        -H ''Content-Type: application/json'' \
+
+        -H ''Accept: application/json'' \
+
+        -H ''Accept-Version: v20250224''
+
+        -H ''Authorization: Basic BASE_64_ENCODING_OF{client_id:api_key}''
+
+        ```
+
+        '
+    bearerAuth:
+      type: http
+      scheme: bearer

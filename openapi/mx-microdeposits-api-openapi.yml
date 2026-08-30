@@ -1,0 +1,352 @@
+openapi: 3.2.0
+info:
+  contact:
+    name: MX Platform API
+    url: https://www.mx.com/products/platform-api
+  description: 'The MX Platform API is a powerful, fully-featured API designed to make aggregating and enhancing financial data easy and reliable. It can seamlessly connect your app or website to tens of thousands of financial institutions.
+
+
+    ## What''s Changed?
+
+
+    Several endpoints, headers, and fields changed in `v20250224`. For more on breaking changes, refer to our [versioning](/api-reference/platform-api/overview/versioning#v20250224) and [migration](/api-reference/platform-api/overview/migration) guides.
+
+
+    ## Version Header
+
+    Versions are set in the `Accept-Version` header of API requests. Version numbers correspond with the date associated with that version.  The example below uses the version `v20250224`.
+
+
+    ```
+
+    -H ''Accept: application/json''
+
+    -H ''Accept-Version: v20250224''
+
+    ```
+
+
+    ---
+
+    '
+  title: MX Platform Microdeposits API
+  version: '20250224'
+servers:
+- url: https://int-api.mx.com
+- url: https://api.mx.com
+security:
+- basicAuth: []
+tags:
+- name: microdeposits
+  description: "Microdeposits is an additional verification method that allows you to verify account details and navigate the process of using microdeposits and the automated clearing house (ACH) system. \n\nMake two, small ACH deposits into a consumer's account using the provided account and routing number. You can then require that the end user confirm the exact amount of each deposit to verify that they own the account and meet NACHA’s account verification.\n\nFor more info, including process flows, setting block lists, and more, see [Microdeposits](docs.mx.com/products/connectivity/microdeposits).\n"
+paths:
+  /users/{user_guid}/micro_deposits:
+    get:
+      tags:
+      - microdeposits
+      operationId: listUserMicrodeposits
+      summary: List all microdeposits for a user
+      description: Use this endpoint to read the attributes of a specific microdeposit according to its unique GUID.
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/userGuid'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicrodepositsResponseBody'
+    post:
+      tags:
+      - microdeposits
+      operationId: createMicrodeposit
+      summary: Create or pre-initiate a microdeposit
+      description: "Use this endpoint to create or pre-initiate a microdeposit. The response will include the new microdeposit record with a status of `INITIATED` or `PREINITIATED` respectively.\n\nTo pre-initiate a microdeposit, you only need to set `email` (string), `first_name` (string), and `last_name` (string) in the request body. \n\nPre-initiating a microdeposit allows you to pass the end user's first name, last name, and email if this data has already been collected. If the end user selects an institution which requires the microdeposit flow, the pre-initiated `micro_deposit` will be used and the Connect Widget step that normally requests this info from the end user will be skipped. However, if the end user selects an institution which supports IAV, the pre-initiated `micro_deposit` will be deleted and IAV will be used instead. When requesting a Connect Widget URL after pre-initiating, make sure to set the `current_microdeposit_guid` to the resulting microdeposit's `guid` and set `data_request.products` to include `account_verification`. If you use this enhanced flow, a `micro_deposit` should be pre-initiated for all connect sessions in verification mode. After pre-initiating a microdeposit, pass the GUID to the config as `current_microdeposit_guid` and set `data_request.products` to include `account_verification` when requesting a Connect URL.  Pre-initiating a microdeposit is optional. If you choose to implement this flow, it should be used for all Connect Widget sessions in verification mode.\n"
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/userGuid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MicrodepositRequestBody'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicrodepositResponseBody'
+  /users/{user_guid}/micro_deposits/{micro_deposit_guid}:
+    parameters:
+    - $ref: '#/components/parameters/acceptVersion'
+    - $ref: '#/components/parameters/microDepositGuid'
+    - $ref: '#/components/parameters/userGuid'
+    delete:
+      tags:
+      - microdeposits
+      operationId: deleteMicrodeposit
+      summary: Delete a microdeposit
+      description: Use this endpoint to delete the specified microdeposit.
+      responses:
+        '204':
+          description: No Content
+    get:
+      tags:
+      - microdeposits
+      operationId: readUserMicrodeposit
+      summary: Read a microdeposit for a user
+      description: Use this endpoint to read the attributes of a specific microdeposit according to its  unique GUID. <br></br> Webhooks for microdeposit status changes are triggered when a  status changes. The actual status of the microdeposit guid updates every minute. You may  force a status update by calling the read microdeposit endpoint.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicrodepositResponseBody'
+  /micro_deposits/{micro_deposit_guid}/verify:
+    put:
+      tags:
+      - microdeposits
+      operationId: verifyMicrodeposit
+      summary: Verify a Microdeposit
+      description: Use this endpoint to verify the amounts deposited into the account during a microdeposit verification. The verification has not successfully completed until the `status` is `VERIFIED`. Poll the `/users/{user_guid}/micro_deposits/{micro_deposit_guid}` (read microdeposit) endpoint until you see this status or an error state.
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/microDepositGuid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MicrodepositVerifyRequestBody'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicrodepositResponseBody'
+  /users/{user_guid}/account_verifications:
+    get:
+      tags:
+      - microdeposits
+      operationId: listUserVerifications
+      summary: List all verifications for a user
+      description: 'This endpoint returns a list of the account verifications associated with the user, as well as the status of those verifications.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/userGuid'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MicrodepositResponseBody'
+components:
+  schemas:
+    MicrodepositVerifyRequest:
+      properties:
+        deposit_amount_1:
+          description: The amount of the first microdeposit sent for account verification.
+          example: 0.12
+          type: number
+        deposit_amount_2:
+          description: The amount of the second microdeposit sent for account verification.
+          example: 0.15
+          type: number
+      type: object
+    MicrodepositRequestBody:
+      properties:
+        micro_deposit:
+          $ref: '#/components/schemas/MicrodepositElements'
+      type: object
+    PaginationResponse:
+      properties:
+        current_page:
+          description: The page delivered by the current response.
+          example: 1
+          type: integer
+        per_page:
+          description: The number of records delivered with each page.
+          example: 25
+          type: integer
+        total_entries:
+          description: The total number of records available.
+          example: 1
+          type: integer
+        total_pages:
+          description: The total number of pages available.
+          example: 1
+          type: integer
+      type: object
+    MicrodepositResponseBody:
+      properties:
+        micro_deposit:
+          items:
+            allOf:
+            - $ref: '#/components/schemas/MicrodepositElements'
+            - $ref: '#/components/schemas/MicrodepositResponse'
+      type: object
+    MicrodepositVerifyRequestBody:
+      properties:
+        micro_deposit:
+          $ref: '#/components/schemas/MicrodepositVerifyRequest'
+      type: object
+    MicrodepositResponse:
+      properties:
+        error_message:
+          description: A message describing an error that occurred.
+          type:
+          - string
+          - 'null'
+          example: null
+        guid:
+          description: The unique identifier for the microdeposit. Defined by MX.
+          type: string
+          example: MIC-09ba578e-8448-4f7f-89e1-b62ff2517edb
+        institution_code:
+          description: The code identifying a financial institution.
+          example: mxbank
+          type: string
+        institution_name:
+          description: An easy-to-read name for an institution. May be `null` for institutions that are not in the MX system.
+          example: MX Bank
+          type: string
+        status:
+          description: The name of the current status. See [Microdeposit Statuses](/api-reference/platform-api/reference/microdeposits#microdeposit-statuseses).
+          example: INITIATED
+          type: string
+        updated_at:
+          description: 'The date and time the resource was last updated in ISO 8601 format with a timestamp.
+
+
+            For categories, this field will always be `null` when `is_default` is `true`.
+
+            '
+          example: '2025-02-13T18:09:00+00:00'
+          type: string
+        verified_at:
+          description: The date and time at which the microdeposit status changed from `DEPOSITED` to `VERIFIED`.
+          example: null
+          type:
+          - string
+          - 'null'
+      type: object
+    MicrodepositsResponseBody:
+      properties:
+        micro_deposits:
+          items:
+            $ref: '#/components/schemas/MicrodepositResponse'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResponse'
+      type: object
+    MicrodepositElements:
+      properties:
+        account_name:
+          description: The human-readable name for the account.
+          example: My test account
+          type: string
+        account_number:
+          description: The account number associated with the account. This will typically be a masked or partial account number.
+          example: '3331261'
+          type: string
+        account_type:
+          description: The type of account. Some account types may include subtypes.
+          example: CHECKING
+          type:
+          - string
+          - 'null'
+          enum:
+          - ANY
+          - CASH
+          - CHECKING
+          - CHECKING_LINE_OF_CREDIT
+          - CREDIT_CARD
+          - LOAN
+          - LINE_OF_CREDIT
+          - SAVINGS
+          - INVESTMENT
+          - MORTGAGE
+          - INSURANCE
+          - PREPAID
+          - PROPERTY
+        email:
+          description: The email address associated with the account.
+          example: example@example.com
+          type: string
+        first_name:
+          description: The account owner's first name. This may also include a middle name. This field will be `null` unless name splitting has been enabled. Contact MX to have this feature enabled.
+          example: Josh
+          type: string
+        last_name:
+          description: The last name of the account holder.
+          example: Grobanne
+          type: string
+        routing_number:
+          description: The routing number for the `account`.
+          example: 091000019
+          type: string
+      required:
+      - account_number
+      - account_type
+      - routing_number
+  parameters:
+    microDepositGuid:
+      name: micro_deposit_guid
+      description: The unique identifier for the microdeposit. Defined by MX.
+      in: path
+      required: true
+      example: MIC-09ba578e-8448-4f7f-89e1-b62ff2517edb
+      schema:
+        type: string
+    userGuid:
+      description: The unique identifier for a `user`, beginning with the prefix `USR-`.
+      example: USR-fa7537f3-48aa-a683-a02a-b18940482f54
+      in: path
+      name: user_guid
+      required: true
+      schema:
+        type: string
+    acceptVersion:
+      name: Accept-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: v20250224
+        example: v20250224
+      description: MX Platform API version.
+  securitySchemes:
+    basicAuth:
+      scheme: basic
+      type: http
+      description: 'The MX Platform API requires basic access authentication using your `client_id` and `api_key`. These credentials must be Base64 encoded and included in the Authorization header of each API request to ensure secure access.
+
+
+        Here''s an example using curl to access `v20250224`. Replace `https://int-api.mx.com/endpoint` with the actual API endpoint you wish to access and your Base64 encoded `client_id` and `api_key`.
+
+
+        ```
+
+        curl -L -X POST `https://int-api.mx.com/endpoint'' \
+
+        -H ''Content-Type: application/json'' \
+
+        -H ''Accept: application/json'' \
+
+        -H ''Accept-Version: v20250224''
+
+        -H ''Authorization: Basic BASE_64_ENCODING_OF{client_id:api_key}''
+
+        ```
+
+        '
+    bearerAuth:
+      type: http
+      scheme: bearer

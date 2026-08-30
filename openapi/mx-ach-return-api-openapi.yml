@@ -1,0 +1,494 @@
+openapi: 3.2.0
+info:
+  contact:
+    name: MX Platform API
+    url: https://www.mx.com/products/platform-api
+  description: 'The MX Platform API is a powerful, fully-featured API designed to make aggregating and enhancing financial data easy and reliable. It can seamlessly connect your app or website to tens of thousands of financial institutions.
+
+
+    ## What''s Changed?
+
+
+    Several endpoints, headers, and fields changed in `v20250224`. For more on breaking changes, refer to our [versioning](/api-reference/platform-api/overview/versioning#v20250224) and [migration](/api-reference/platform-api/overview/migration) guides.
+
+
+    ## Version Header
+
+    Versions are set in the `Accept-Version` header of API requests. Version numbers correspond with the date associated with that version.  The example below uses the version `v20250224`.
+
+
+    ```
+
+    -H ''Accept: application/json''
+
+    -H ''Accept-Version: v20250224''
+
+    ```
+
+
+    ---
+
+    '
+  title: MX Platform ach return API
+  version: '20250224'
+servers:
+- url: https://int-api.mx.com
+- url: https://api.mx.com
+security:
+- basicAuth: []
+tags:
+- name: ach return
+  description: 'The features documented here are in a beta state, and this documentation is considered draft material subject to frequent change.
+
+
+    Using our Platform API, you can securely submit ACH Returns to reduce your ACH return rates and automate your ACH return process.
+
+
+    You can query the status and outcomes of your submitted ACH returns to track progress and access resolution details.
+
+    '
+paths:
+  /ach_returns/{ach_return_guid}:
+    get:
+      description: 'Use this endpoint to get an ACH return by its `guid` or `id`.
+
+        '
+      operationId: readACHRetrun
+      parameters:
+      - $ref: '#/components/parameters/achReturnGuid'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ACHReturnResponseBody'
+          description: OK
+      summary: Read ACH Return
+      tags:
+      - ach return
+  /ach_returns:
+    get:
+      description: 'Use this endpoint to get all ACH returns.
+
+        '
+      operationId: listACHRetruns
+      parameters:
+      - $ref: '#/components/parameters/institutionGuid'
+      - $ref: '#/components/parameters/returnedAt'
+      - $ref: '#/components/parameters/resolvedStatusAt'
+      - $ref: '#/components/parameters/returnCode'
+      - $ref: '#/components/parameters/returnStatus'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/recordsPerPage'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ACHReturnsResponseBody'
+          description: OK
+      summary: List ACH Returns
+      tags:
+      - ach return
+    post:
+      description: 'Use this endpoint to create an ACH return in our system.
+
+        '
+      operationId: createACHReturn
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ACHReturnCreateRequestBody'
+        description: ACH return object to be created.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ACHReturnResponseBody'
+          description: OK
+      summary: Create ACH Return
+      tags:
+      - ach return
+components:
+  parameters:
+    resolvedStatusAt:
+      description: The date and time when the return was resolved by the Receiving Financial Depository Institution (RDFI) in ISO 8601 format without timestamp
+      example: '2025-02-13T18:09:00+00:00'
+      in: query
+      name: resolved_status_at
+      required: false
+      schema:
+        type: string
+    institutionGuid:
+      description: The identifier for the institution associated with the ACH return. Defined by MX.
+      in: query
+      name: institution_guid
+      required: false
+      schema:
+        type: string
+    recordsPerPage:
+      description: This specifies the number of records to be returned on each page. Defaults to `25`. The valid range is from `10` to `100`. If the value exceeds `100`, the default value of `25` will be used instead.
+      example: 10
+      in: query
+      name: records_per_page
+      schema:
+        type: integer
+    achReturnGuid:
+      name: ach_return_guid
+      description: The unique identifier (`guid`) for the ACH return. Defined by MX.
+      required: true
+      in: path
+      schema:
+        type: string
+    returnedAt:
+      description: The date and time when the return was reported by the Receiving Financial Depository Institution (RDFI) in ISO 8601 format without timestamp.
+      example: '2025-02-13T18:09:00+00:00'
+      in: query
+      name: returned_at
+      required: false
+      schema:
+        type: string
+    page:
+      description: Results are paginated. Specify current page.
+      example: 1
+      in: query
+      name: page
+      schema:
+        type: integer
+    returnStatus:
+      description: The status of the return. See [Return Statuses](/api-reference/platform-api/reference/ach-return-fields/#return-status) for a complete list.
+      example: SUBMITTED
+      in: query
+      name: return_status
+      required: false
+      schema:
+        type: string
+    returnCode:
+      description: The associated ACH return code and notice of change code. See [Return Codes](/api-reference/platform-api/reference/ach-return-fields/#return-codes) for a complete list.
+      in: query
+      name: return_code
+      required: false
+      schema:
+        type: string
+  schemas:
+    PaginationResponse:
+      properties:
+        current_page:
+          description: The page delivered by the current response.
+          example: 1
+          type: integer
+        per_page:
+          description: The number of records delivered with each page.
+          example: 25
+          type: integer
+        total_entries:
+          description: The total number of records available.
+          example: 1
+          type: integer
+        total_pages:
+          description: The total number of pages available.
+          example: 1
+          type: integer
+      type: object
+    ACHReturnCreateRequest:
+      properties:
+        account_guid:
+          description: The unique identifier for the account associated with the transaction. Defined by MX.
+          example: ACT-06d7f44b-caae-0f6e-1384-01f52e75dcb1
+          type: string
+        account_number_last_four:
+          description: The last 4 digits of the account number used for the transaction by the Originating Depository Financial Institution (ODFI).
+          example: '1234'
+          type:
+          - string
+          - 'null'
+        ach_initiated_at:
+          description: The date and time when the transaction was initiated by the Originating Depository Financial Institution (ODFI) in ISO 8601 format without timestamp.
+          example: '2025-02-13T18:08:00+00:00'
+          type:
+          - string
+          - 'null'
+        corrected_account_number:
+          description: The account number correction reported by the RDFI. Populate only if the `resolution_code` is `NOTICE_OF_CHANGE`.
+          example: null
+          type:
+          - string
+          - 'null'
+        corrected_routing_number:
+          description: The routing number correction reported by the RDFI. Populated only if the `resolution_code` is `NOTICE_OF_CHANGE`. Must be a valid 9-digit routing number format.
+          example: null
+          type:
+          - string
+          - 'null'
+        id:
+          description: Client-defined identifier for this specific return submission. Allows you to track and reference you requests.
+          example: client_ach_id_1234
+          type: string
+        member_guid:
+          example: MBR-7c6f361b-e582-15b6-60c0-358f12466b4b
+          description: The unique identifier for the member associated with the transaction. Defined by MX.
+          type: string
+        return_account_number:
+          description: Incorrect account number used in the ACH transaction.
+          example: 'null'
+          type: string
+        return_code:
+          description: A short, machine-readable code that categorizes the type of resolution or reason for the status. See [Resolution Codes](/api-reference/platform-api/reference/ach-return-fields/#resolution-codes) for a complete list.
+          example: R01
+          type: string
+        return_notes:
+          description: Notes that you set to inform MX on internal ACH processing.
+          example: 'null'
+          type: string
+        return_routing_number:
+          description: Incorrect routing number used in the ACH transaction.
+          example: 'null'
+          type: string
+        returned_at:
+          description: The date and time when the return was reported by the Receiving Financial Depository Institution (RDFI) in ISO 8601 format without timestamp.
+          example: '2025-02-13T18:09:00+00:00'
+          type: string
+        sec_code:
+          description: The SEC code (Standard Entry Class Code)–a three-letter code describing how a payment was authorized (for example, `WEB`). See [SEC Codes](#sec-codes) for a complete list.
+          example: PPD
+          type: string
+        transaction_amount:
+          description: The amount of the transaction.
+          example: 225.84
+          type: number
+        transaction_amount_range:
+          description: The transaction amount range, used for impact assessment.
+          example: 0
+          type: number
+        user_guid:
+          example: USR-fa7537f3-48aa-a683-a02a-b18940482f54
+          description: MX-defined identifier for the user associated with the ACH return.
+          type: string
+      required:
+      - member_guid
+      - account_guid
+      - id
+      - user_guid
+      - return_code
+    ACHResponse:
+      properties:
+        account_guid:
+          description: The unique identifier for an account. Defined by MX.
+          example: ACT-06d7f44b-caae-0f6e-1384-01f52e75dcb1
+          type: string
+        account_number_last_four:
+          description: The last 4 digits of the account number used for the transaction by the Originating Depository Financial Institution (ODFI).
+          example: '1234'
+          type:
+          - string
+          - 'null'
+        account_type:
+          description: The type of account. Some account types may include subtypes.
+          example: CHECKING
+          type:
+          - string
+          - 'null'
+          enum:
+          - ANY
+          - CASH
+          - CHECKING
+          - CHECKING_LINE_OF_CREDIT
+          - CREDIT_CARD
+          - LOAN
+          - LINE_OF_CREDIT
+          - SAVINGS
+          - INVESTMENT
+          - MORTGAGE
+          - INSURANCE
+          - PREPAID
+          - PROPERTY
+        ach_initiated_at:
+          description: The date and time when the transaction was initiated by the Originating Depository Financial Institution (ODFI) in ISO 8601 format without timestamp.
+          example: '2025-02-13T18:08:00+00:00'
+          type:
+          - string
+          - 'null'
+        client_guid:
+          description: The unique identifier for the client associated with the insight. Defined by MX.
+          example: CLT-abcd-1234
+          type: string
+        corrected_account_number:
+          description: The account number correction reported by the RDFI. Populate only if the `resolution_code` is `NOTICE_OF_CHANGE`.
+          example: null
+          type:
+          - string
+          - 'null'
+        corrected_routing_number:
+          description: The routing number correction reported by the RDFI. Populated only if the `resolution_code` is `NOTICE_OF_CHANGE`. Must be a valid 9-digit routing number format.
+          example: null
+          type:
+          - string
+          - 'null'
+        created_at:
+          description: The date and time the ACH return was created, represented in ISO 8601 format with a timestamp.
+          example: '2025-02-13T18:08:00+00:00'
+          type: string
+        guid:
+          description: The unique identifier for the ACH return record. Defined by MX.
+          example: ACH-d74cb14f-fd0a-449f-991b-e0362a63d9c6
+          type: string
+        id:
+          description: Client-defined identifier for this specific return submission. Allows you to track and reference your requests.
+          example: client_ach_return_id_1234
+          type: string
+        institution_guid:
+          description: The unique identifier for an institution. Defined by MX.
+          example: INS-34r4f44b-cfge-0f6e-3484-21f47e45tfv7
+          type: string
+        investigation_notes:
+          description: Notes added by Product Support during investigation of the ACH return.
+          example: null
+          type:
+          - string
+          - 'null'
+        member_guid:
+          description: The unique identifier for the member. Defined by MX.
+          example: MBR-7c6f361b-e582-15b6-60c0-358f12466b4b
+          type: string
+        processing_errors:
+          description: Any errors that occurred during processing.
+          example: null
+          type:
+          - string
+          - 'null'
+        resolution_code:
+          description: A short, machine-readable code that categorizes the type of resolution or reason for the status. See [Resolution Codes](/api-reference/platform-api/reference/ach-return-fields#resolution-codes) for a complete list.
+          example: null
+          type:
+          - string
+          - 'null'
+        resolution_detail:
+          description: A more detailed, human-readable message providing context and next steps related to the `return_status` and `resolution_code`.
+          example: null
+          type:
+          - string
+          - 'null'
+        resolved_status_at:
+          description: Date and time when the return was marked as resolved.
+          example: null
+          type:
+          - string
+          - 'null'
+        return_code:
+          description: The associated ACH return codes and notice of change codes (for example, R02, R03, R04, R05, R20, NOC). See [Return Codes](/api-reference/platform-api/reference/ach-return-fields#return-codes) for a complete list
+          example: R01
+          type: string
+        return_notes:
+          description: Notes that you set to inform MX on internal ACH processing.
+          example: null
+          type:
+          - string
+          - 'null'
+        return_account_number:
+          description: Incorrect account number used in the ACH transaction.
+          example: null
+          type:
+          - string
+          - 'null'
+        return_routing_number:
+          description: Incorrect routing number used in the ACH transaction.
+          example: null
+          type:
+          - string
+          - 'null'
+        return_status:
+          description: The current processing status of the ACH return. See [Return Status](/api-reference/platform-api/reference/ach-return-fields#return-status) for a complete list of statuses.
+          example: SUBMITTED
+          type:
+          - string
+          - 'null'
+        returned_at:
+          description: The date and time when the return was reported by the Receiving Financial Depository Institution (RDFI) in ISO 8601 format without timestamp.
+          example: '2025-02-13T18:09:00+00:00'
+          type:
+          - string
+          - 'null'
+        sec_code:
+          description: The three-letter SEC code (Standard Entry Class Code) describing how a payment was authorized (for example, `WEB`). See [SEC Codes](/api-reference/platform-api/reference/ach-return-fields#sec-codes) for a complete list.
+          example: PPD
+          type:
+          - string
+          - 'null'
+        started_processing_at:
+          description: Date and time when MX started processing the return.
+          example: null
+          type:
+          - string
+          - 'null'
+        submitted_at:
+          description: Date and time when the record was submitted through the API.
+          example: null
+          type:
+          - string
+          - 'null'
+        transaction_amount:
+          description: The amount of the transaction.
+          example: 225.84
+          format: double
+          type:
+          - number
+          - 'null'
+        updated_at:
+          description: Date and time when the ACH return record was last updated.
+          example: 'null'
+          type: string
+        user_guid:
+          description: The unique identifier for the user. Defined by MX.
+          example: USR-fa7537f3-48aa-a683-a02a-b18940482f54
+          type: string
+      type: object
+    ACHReturnsResponseBody:
+      properties:
+        ach_returns:
+          items:
+            $ref: '#/components/schemas/ACHResponse'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResponse'
+      type: object
+    ACHReturnCreateRequestBody:
+      properties:
+        ach_return:
+          $ref: '#/components/schemas/ACHReturnCreateRequest'
+      type: object
+    ACHReturnResponseBody:
+      properties:
+        ach_return:
+          $ref: '#/components/schemas/ACHResponse'
+      type: object
+  securitySchemes:
+    basicAuth:
+      scheme: basic
+      type: http
+      description: 'The MX Platform API requires basic access authentication using your `client_id` and `api_key`. These credentials must be Base64 encoded and included in the Authorization header of each API request to ensure secure access.
+
+
+        Here''s an example using curl to access `v20250224`. Replace `https://int-api.mx.com/endpoint` with the actual API endpoint you wish to access and your Base64 encoded `client_id` and `api_key`.
+
+
+        ```
+
+        curl -L -X POST `https://int-api.mx.com/endpoint'' \
+
+        -H ''Content-Type: application/json'' \
+
+        -H ''Accept: application/json'' \
+
+        -H ''Accept-Version: v20250224''
+
+        -H ''Authorization: Basic BASE_64_ENCODING_OF{client_id:api_key}''
+
+        ```
+
+        '
+    bearerAuth:
+      type: http
+      scheme: bearer

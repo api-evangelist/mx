@@ -1,0 +1,726 @@
+openapi: 3.2.0
+info:
+  contact:
+    name: MX Platform API
+    url: https://www.mx.com/products/platform-api
+  description: 'The MX Platform API is a powerful, fully-featured API designed to make aggregating and enhancing financial data easy and reliable. It can seamlessly connect your app or website to tens of thousands of financial institutions.
+
+
+    ## What''s Changed?
+
+
+    Several endpoints, headers, and fields changed in `v20250224`. For more on breaking changes, refer to our [versioning](/api-reference/platform-api/overview/versioning#v20250224) and [migration](/api-reference/platform-api/overview/migration) guides.
+
+
+    ## Version Header
+
+    Versions are set in the `Accept-Version` header of API requests. Version numbers correspond with the date associated with that version.  The example below uses the version `v20250224`.
+
+
+    ```
+
+    -H ''Accept: application/json''
+
+    -H ''Accept-Version: v20250224''
+
+    ```
+
+
+    ---
+
+    '
+  title: MX Platform spending plan API
+  version: '20250224'
+servers:
+- url: https://int-api.mx.com
+- url: https://api.mx.com
+security:
+- basicAuth: []
+tags:
+- name: spending plan
+  description: 'Use the Spending Plan endpoints to create your own version of our [Spending Plan Widget](docs.mx.com/products/experience/pfm/legacy-widget-overviews/spending-plan), which helps end users track their spending throughout the month.
+
+
+    To understand key terms and how to best use these endpoints, see [Build Your Own Spending Plan UI](docs.mx.com/products/experience/pfm/integration-guides/build-your-own-spending-plan-ui).
+
+    '
+paths:
+  /users/{user_guid}/spending_plans/{spending_plan_guid}/iterations/current/iteration_items:
+    post:
+      description: This endpoint creates a new `spending_plan_iteration_item`.
+      operationId: createSpendingPlanIterationItem
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      - $ref: '#/components/parameters/userGuid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpendingPlanIterationItemCreateRequestBody'
+        description: Iteration item to be created with required parameter (planned_amount)
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingPlanIterationItemResponse'
+          description: OK
+      summary: Create spending plan iteration item
+      tags:
+      - spending plan
+    get:
+      description: Use this endpoint to list all the spending plan `iteration_items` associated with the `iteration`.
+      operationId: listSpendingPlanIterationItems
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/recordsPerPageMax1000'
+      - $ref: '#/components/parameters/userGuid'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingPlanIterationItemsResponseBody'
+          description: OK
+      summary: List spending plan iteration items
+      tags:
+      - spending plan
+  /users/{user_guid}/spending_plans:
+    post:
+      description: This endpoint creates a new `spending_plan` for the user.
+      operationId: createSpendingPlan
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/userGuid'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingPlanResponse'
+          description: OK
+      summary: Create spending plan
+      tags:
+      - spending plan
+    get:
+      description: Use this endpoint to list all the spending plans associated with the user.
+      operationId: listSpendingPlans
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/recordsPerPageMax1000'
+      - $ref: '#/components/parameters/userGuid'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingPlansResponseBody'
+          description: OK
+      summary: List spending plans
+      tags:
+      - spending plan
+  /users/{user_guid}/spending_plans/{spending_plan_guid}/spending_plan_accounts/{spending_plan_account_guid}:
+    delete:
+      description: Use this endpoint to delete a `spending_plan_account`.
+      operationId: deleteSpendingPlanAccount
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/userGuid'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      - $ref: '#/components/parameters/spendingPlanAccountGuid'
+      responses:
+        '204':
+          description: No Content
+      summary: Delete spending plan account
+      tags:
+      - spending plan
+    get:
+      description: Use this endpoint to read the attributes of a specific spending plan account according to its unique GUID.
+      operationId: readSpendingPlanAccount
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/recordsPerPageMax1000'
+      - $ref: '#/components/parameters/userGuid'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      - $ref: '#/components/parameters/spendingPlanAccountGuid'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingPlanAccountResponse'
+          description: OK
+      summary: Read spending plan account
+      tags:
+      - spending plan
+  /users/{user_guid}/spending_plans/{spending_plan_guid}/iterations/current/iteration_items/{iteration_item_guid}:
+    delete:
+      description: Use this endpoint to delete a spending plan `iteration_item`.
+      operationId: deleteSpendingPlanIterationItem
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/userGuid'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      - $ref: '#/components/parameters/iterationItemGuid'
+      responses:
+        '204':
+          description: No Content
+      summary: Delete spending plan iteration item
+      tags:
+      - spending plan
+    get:
+      description: Use this endpoint to read the attributes of a specific spending plan `iteration_item` according to its unique GUID.
+      operationId: readSpendingPlanIterationItem
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/recordsPerPageMax1000'
+      - $ref: '#/components/parameters/userGuid'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      - $ref: '#/components/parameters/iterationItemGuid'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingPlanIterationItemResponse'
+          description: OK
+      summary: Read a spending plan iteration item
+      tags:
+      - spending plan
+    put:
+      description: Use this endpoint to update an existing `spending_plan_iteration_item`.
+      operationId: updateSpendingPlanIterationItem
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/userGuid'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      - $ref: '#/components/parameters/iterationItemGuid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpendingPlanIterationItemCreateRequestBody'
+        description: Iteration item to be updated with required parameter (planned_amount)
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingPlanIterationItemResponse'
+          description: OK
+      summary: Update a spending plan iteration item
+      tags:
+      - spending plan
+  /users/{user_guid}/spending_plans/{spending_plan_guid}:
+    delete:
+      description: Use this endpoint to delete a user's `spending_plan`.
+      operationId: deleteSpendingPlan
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/userGuid'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      responses:
+        '204':
+          description: No Content
+      summary: Delete spending plan
+      tags:
+      - spending plan
+    get:
+      description: Use this endpoint to read the attributes of a specific spending plan according to its unique GUID.
+      operationId: readSpendingPlanUser
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/recordsPerPageMax1000'
+      - $ref: '#/components/parameters/userGuid'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingPlanResponse'
+          description: OK
+      summary: Read a spending plan for a user
+      tags:
+      - spending plan
+  /users/{user_guid}/spending_plans/{spending_plan_guid}/spending_plan_accounts:
+    get:
+      description: Use this endpoint to list all the spending plan accounts associated with the spending plan.
+      operationId: listSpendingPlanAccounts
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/recordsPerPageMax1000'
+      - $ref: '#/components/parameters/userGuid'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingPlanAccountsResponse'
+          description: OK
+      summary: List spending plan accounts
+      tags:
+      - spending plan
+  /users/{user_guid}/spending_plans/{spending_plan_guid}/iterations:
+    get:
+      description: Use this endpoint to list all the spending plan `iterations` associated with the `spending_plan`.
+      operationId: listSpendingPlanIterations
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/recordsPerPageMax1000'
+      - $ref: '#/components/parameters/userGuid'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingPlanIterationsResponse'
+          description: OK
+      summary: List spending plan iterations
+      tags:
+      - spending plan
+  /users/{user_guid}/spending_plans/{spending_plan_guid}/iterations/current:
+    get:
+      description: Use this endpoint to read the attributes of the current spending plan `iteration`.
+      operationId: readCurrentSpendingPlanIteration
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/recordsPerPageMax1000'
+      - $ref: '#/components/parameters/userGuid'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingPlanIterationResponse'
+          description: OK
+      summary: Read current spending plan iteration
+      tags:
+      - spending plan
+  /users/{user_guid}/spending_plans/{spending_plan_guid}/iterations/{iteration_number}:
+    get:
+      description: Use this endpoint to read the attributes of a specific spending plan `iteration` according to its `iteration_number`.
+      operationId: readSpendingPlanIteration
+      parameters:
+      - $ref: '#/components/parameters/acceptVersion'
+      - $ref: '#/components/parameters/page'
+      - $ref: '#/components/parameters/recordsPerPageMax1000'
+      - $ref: '#/components/parameters/userGuid'
+      - $ref: '#/components/parameters/spendingPlanGuid'
+      - $ref: '#/components/parameters/iterationNumber'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpendingPlanIterationResponse'
+          description: OK
+      summary: Read a spending plan iteration
+      tags:
+      - spending plan
+components:
+  parameters:
+    spendingPlanAccountGuid:
+      description: The unique ID for the specified account.
+      example: ACT-e9f80fee-84da-7s7r-9a5e-0346g4279b4c
+      in: path
+      name: spending_plan_account_guid
+      required: true
+      schema:
+        type: string
+    iterationNumber:
+      description: The current iteration number for the spending plan `iteration`.
+      example: 1
+      in: path
+      name: iteration_number
+      required: true
+      schema:
+        type: integer
+    userGuid:
+      description: The unique identifier for a `user`, beginning with the prefix `USR-`.
+      example: USR-fa7537f3-48aa-a683-a02a-b18940482f54
+      in: path
+      name: user_guid
+      required: true
+      schema:
+        type: string
+    spendingPlanGuid:
+      description: The unique ID for the `spending_plan`.
+      example: SPL-e5f9a5bd-c5b3-4901-bdc0-62119b9db262
+      in: path
+      name: spending_plan_guid
+      required: true
+      schema:
+        type: string
+    acceptVersion:
+      name: Accept-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: v20250224
+        example: v20250224
+      description: MX Platform API version.
+    page:
+      description: Results are paginated. Specify current page.
+      example: 1
+      in: query
+      name: page
+      schema:
+        type: integer
+    recordsPerPageMax1000:
+      description: This specifies the number of records to be returned on each page. Defaults to `25`. The valid range is from `10` to `1000`. If the value exceeds `1000`, the default value of `25` will be used instead.
+      example: 10
+      in: query
+      name: records_per_page
+      schema:
+        type: integer
+    iterationItemGuid:
+      description: The unique ID for the `iteration_item`.
+      example: SII-a4dc1549-da28-1245-9c9c-53eee4cdfbe3
+      in: path
+      name: iteration_item_guid
+      required: true
+      schema:
+        type: string
+  schemas:
+    SpendingPlansResponseBody:
+      properties:
+        spending_plans:
+          items:
+            $ref: '#/components/schemas/SpendingPlanResponse'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResponse'
+      type: object
+    SpendingPlanResponse:
+      properties:
+        created_at:
+          description: The date and time the spending plan was created, represented in ISO 8601 format with a timestamp.
+          example: '2025-02-13T18:08:00+00:00'
+          type:
+          - string
+          - 'null'
+        current_iteration_number:
+          description: The current active associated `spending_plan_iteration` number for a given `spending_plan`.
+          example: 1
+          type:
+          - integer
+          - 'null'
+        guid:
+          description: The unique identifier for the `spending_plan`. Defined by MX.
+          example: SPL-e5f9a5bd-c5b3-4901-bdc0-62119b9db262
+          type:
+          - string
+          - 'null'
+        updated_at:
+          description: 'The date and time the resource was last updated in ISO 8601 format with a timestamp.
+
+
+            For categories, this field will always be `null` when `is_default` is `true`.
+
+            '
+          example: '2025-02-13T18:09:00+00:00'
+          type:
+          - string
+          - 'null'
+        user_guid:
+          description: The unique identifier for the user. Defined by MX.
+          example: USR-fa7537f3-48aa-a683-a02a-b18940482f54
+          type:
+          - string
+          - 'null'
+      type: object
+    SpendingPlanIterationItemResponse:
+      properties:
+        actual_amount:
+          description: The sum of the transactions associated with the spending plan `iteration_item`.
+          example: 345
+          type:
+          - number
+          - 'null'
+        category_guid:
+          description: The unique identifier for the category. Defined by MX.
+          example: CAT-b6d61a19-30a7-e852-2703-bdfb4072289e
+          type:
+          - string
+          - 'null'
+        created_at:
+          description: The date and time the spending plan iteration item was created, represented in ISO 8601 format with a timestamp.
+          example: '2025-02-13T18:08:00+00:00'
+          type:
+          - string
+          - 'null'
+        guid:
+          description: The unique identifier for the spending plan `iteration_item`. Defined by MX.
+          example: SPL-e5f9a5bd-c5b3-4901-bdc0-62119b9db262
+          type:
+          - string
+          - 'null'
+        item_type:
+          description: The type of transaction grouping for the spending plan `iteration_item` (0 = `RECURRING_EXPENSE`, 1 = `PLANNED_EXPENSE`, 2 = `OTHER_EXPENSE`, 3 = `INCOME`).
+          example: 1
+          type:
+          - integer
+          - 'null'
+          enum:
+          - 0
+          - 1
+          - 2
+          - 3
+        planned_amount:
+          description: The total amount planned for a spending plan `iteration_item`.
+          example: 110
+          type:
+          - number
+          - 'null'
+        scheduled_payment_guid:
+          description: The unique identifier for the `scheduled_payment_guid` associated with the spending plan `iteration_item`. Defined by MX.
+          example: SCP-c731988a-712f-4f83-9b3b-0aa5b3d5208b
+          type:
+          - string
+          - 'null'
+        spending_plan_iteration_guid:
+          description: The unique identifier for the spending plan `iteration_item`. Defined by MX.
+          example: SPI-848e6648-3fa3-4632-ac8f-e65f03167102
+          type:
+          - string
+          - 'null'
+        top_level_category_guid:
+          description: The unique identifier for the `top_level_category_guid` associated with the spending plan `iteration_item`. Defined by MX.
+          example: CAT-9588eaad-90a4-bb5c-66c8-1812503d0db8
+          type:
+          - string
+          - 'null'
+        transaction_guids:
+          description: An array of transaction GUIDs that are relevant to the spending plan `iteration_item`. Defined by MX.
+          items:
+            example: TRN-265abee9-889b-af6a-c69b-25157db2bdd9
+            type:
+            - string
+            - 'null'
+          type: array
+        updated_at:
+          description: 'The date and time the resource was last updated in ISO 8601 format with a timestamp.
+
+
+            For categories, this field will always be `null` when `is_default` is `true`.
+
+            '
+          example: '2025-02-13T18:09:00+00:00'
+          type:
+          - string
+          - 'null'
+        user_guid:
+          description: The unique identifier for the user. Defined by MX.
+          example: USR-fa7537f3-48aa-a683-a02a-b18940482f54
+          type:
+          - string
+          - 'null'
+      type: object
+    SpendingPlanAccountsResponse:
+      properties:
+        spending_plan_accounts:
+          items:
+            $ref: '#/components/schemas/SpendingPlanAccountResponse'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResponse'
+      type: object
+    PaginationResponse:
+      properties:
+        current_page:
+          description: The page delivered by the current response.
+          example: 1
+          type: integer
+        per_page:
+          description: The number of records delivered with each page.
+          example: 25
+          type: integer
+        total_entries:
+          description: The total number of records available.
+          example: 1
+          type: integer
+        total_pages:
+          description: The total number of pages available.
+          example: 1
+          type: integer
+      type: object
+    SpendingPlanAccountResponse:
+      properties:
+        account_guid:
+          description: The unique identifier for an account. Defined by MX.
+          example: ACT-06d7f44b-caae-0f6e-1384-01f52e75dcb1
+          type: string
+        client_guid:
+          description: The unique identifier for the client associated with the insight. Defined by MX.
+          example: CLT-abcd-1234
+          type: string
+        created_at:
+          description: The date and time the spending plan account was created, represented in ISO 8601 format with a timestamp.
+          example: '2025-02-13T18:08:00+00:00'
+          type: string
+        guid:
+          description: The unique identifier for the spending plan account. Defined by MX.
+          example: SPA-c76e4a85-b2c4-4335-82b7-8f8b8f28c35a
+          type: string
+        spending_plan_guid:
+          description: The unique identifier for the spending plan. Defined by MX.
+          example: SPL-dbfe201d-c341-4bff-93c0-62a918d0b600
+          type: string
+        updated_at:
+          description: 'The date and time the resource was last updated in ISO 8601 format with a timestamp.
+
+
+            For categories, this field will always be `null` when `is_default` is `true`.
+
+            '
+          example: '2025-02-13T18:09:00+00:00'
+          type: string
+        user_guid:
+          description: The unique identifier for the user. Defined by MX.
+          example: USR-fa7537f3-48aa-a683-a02a-b18940482f54
+          type: string
+      type: object
+    SpendingPlanIterationResponse:
+      properties:
+        created_at:
+          description: The date and time the spending plan iteration was created, represented in ISO 8601 format with a timestamp.
+          example: '2025-02-13T18:08:00+00:00'
+          type:
+          - string
+          - 'null'
+        end_on:
+          description: The date on which the spending plan iteration ends.
+          example: '2023-05-31'
+          type:
+          - string
+          - 'null'
+        guid:
+          description: The unique identifier for the spending plan iteration. Defined by MX.
+          example: SPI-848e6648-3fa3-4632-ac8f-e65f03167102
+          type:
+          - string
+          - 'null'
+        iteration_number:
+          description: The current iteration number for the spending plan iteration.
+          example: 1
+          type:
+          - integer
+          - 'null'
+        spending_plan_guid:
+          description: The unique identifier for the spending plan. Defined by MX.
+          example: SPL-dbfe201d-c341-4bff-93c0-62a918d0b600
+          type:
+          - string
+          - 'null'
+        start_on:
+          description: The date on which the spending plan iteration starts.
+          example: '2023-05-01'
+          type:
+          - string
+          - 'null'
+        updated_at:
+          description: 'The date and time the resource was last updated in ISO 8601 format with a timestamp.
+
+
+            For categories, this field will always be `null` when `is_default` is `true`.
+
+            '
+          example: '2025-02-13T18:09:00+00:00'
+          type:
+          - string
+          - 'null'
+        user_guid:
+          description: The unique identifier for the user. Defined by MX.
+          example: USR-fa7537f3-48aa-a683-a02a-b18940482f54
+          type:
+          - string
+          - 'null'
+      type: object
+    SpendingPlanIterationsResponse:
+      properties:
+        iterations:
+          items:
+            $ref: '#/components/schemas/SpendingPlanIterationResponse'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResponse'
+      type: object
+    SpendingPlanIterationItemsResponseBody:
+      properties:
+        iteration_items:
+          items:
+            $ref: '#/components/schemas/SpendingPlanIterationItemResponse'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/PaginationResponse'
+      type: object
+    SpendingPlanIterationItemCreateRequestBody:
+      properties:
+        category_guid:
+          description: The unique identifier for the category. Defined by MX.
+          example: CAT-b6d61a19-30a7-e852-2703-bdfb4072289e
+          type: string
+        item_type:
+          description: The type of transaction grouping for the spending plan `iteration_item` (0 = `RECURRING_EXPENSE`, 1 = `PLANNED_EXPENSE`, 2 = `OTHER_EXPENSE`, 3 = `INCOME`).
+          example: 1
+          type: number
+        planned_amount:
+          description: The total amount planned for a spending plan `iteration_item`.
+          example: 61.11
+          type: number
+        scheduled_payment_guid:
+          description: The unique identifier for the `scheduled_payment_guid` associated with the spending plan `iteration_item`. Defined by MX.
+          example: SCP-c731988a-712f-4f83-9b3b-0aa5b3d5208b
+          type: string
+        top_level_category_guid:
+          description: The unique identifier for the `top_level_category_guid` associated with the spending plan `iteration_item`. Defined by MX.
+          example: CAT-9588eaad-90a4-bb5c-66c8-1812503d0db8
+          type: string
+      required:
+      - planned_amount
+      type: object
+  securitySchemes:
+    basicAuth:
+      scheme: basic
+      type: http
+      description: 'The MX Platform API requires basic access authentication using your `client_id` and `api_key`. These credentials must be Base64 encoded and included in the Authorization header of each API request to ensure secure access.
+
+
+        Here''s an example using curl to access `v20250224`. Replace `https://int-api.mx.com/endpoint` with the actual API endpoint you wish to access and your Base64 encoded `client_id` and `api_key`.
+
+
+        ```
+
+        curl -L -X POST `https://int-api.mx.com/endpoint'' \
+
+        -H ''Content-Type: application/json'' \
+
+        -H ''Accept: application/json'' \
+
+        -H ''Accept-Version: v20250224''
+
+        -H ''Authorization: Basic BASE_64_ENCODING_OF{client_id:api_key}''
+
+        ```
+
+        '
+    bearerAuth:
+      type: http
+      scheme: bearer

@@ -105,6 +105,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Account
+  tags_raw:
   - accounts
   properties:
   - type: OpenAPI
@@ -159,6 +161,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Budgets
+  tags_raw:
   - budgets
   properties:
   - type: OpenAPI
@@ -179,6 +183,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Categories
+  tags_raw:
   - categories
   properties:
   - type: OpenAPI
@@ -197,6 +203,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Consent Management
+  tags_raw:
   - consent_management
   properties:
   - type: OpenAPI
@@ -225,6 +233,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Goals
+  tags_raw:
   - goals
   properties:
   - type: OpenAPI
@@ -255,6 +265,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Insights
+  tags_raw:
   - insights
   properties:
   - type: OpenAPI
@@ -333,6 +345,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Job
+  tags_raw:
   - jobs
   properties:
   - type: OpenAPI
@@ -375,6 +389,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Members
+  tags_raw:
   - members
   properties:
   - type: OpenAPI
@@ -399,6 +415,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Merchants
+  tags_raw:
   - merchants
   properties:
   - type: OpenAPI
@@ -422,6 +440,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Microdeposits
+  tags_raw:
   - microdeposits
   properties:
   - type: OpenAPI
@@ -441,6 +461,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Monthly_cash_flow_profile
+  tags_raw:
   - monthly cash flow profile
   properties:
   - type: OpenAPI
@@ -468,6 +490,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Notification
+  tags_raw:
   - notifications
   properties:
   - type: OpenAPI
@@ -504,6 +528,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Rewards
+  tags_raw:
   - rewards
   properties:
   - type: OpenAPI
@@ -527,6 +553,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Spending Plan
+  tags_raw:
   - spending plan
   properties:
   - type: OpenAPI
@@ -547,6 +575,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Statements
+  tags_raw:
   - statements
   properties:
   - type: OpenAPI
@@ -570,6 +600,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Taggings
+  tags_raw:
   - taggings
   properties:
   - type: OpenAPI
@@ -593,6 +625,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Tags
+  tags_raw:
   - tags
   properties:
   - type: OpenAPI
@@ -619,6 +653,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Transaction_rules
+  tags_raw:
   - transaction rules
   properties:
   - type: OpenAPI
@@ -649,6 +685,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Transaction
+  tags_raw:
   - transactions
   properties:
   - type: OpenAPI
@@ -672,6 +710,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - User
+  tags_raw:
   - users
   properties:
   - type: OpenAPI
@@ -691,6 +731,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Verifiable Credentials
+  tags_raw:
   - verifiable credentials
   properties:
   - type: OpenAPI
@@ -717,6 +759,8 @@ apis:
   humanURL: https://docs.mx.com/api-reference/platform-api/reference/mx-platform-api
   baseURL: https://api.mx.com
   tags:
+  - Widgets
+  tags_raw:
   - widgets
   properties:
   - type: OpenAPI
